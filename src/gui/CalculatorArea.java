@@ -72,6 +72,9 @@ public class CalculatorArea extends GridPane {
 			// show result
 			shippingCostLabel.setText(String.valueOf(costs));
 		} catch (IllegalArgumentException | NotValidDimensionsException e) {
+
+			// PackageCalculator.getInstance().messagesArea.setMessage("An unexpected error occurred: " + e.getMessage());
+
 			// disable previous result display
 			shippingCostLabel.setText("");
 
