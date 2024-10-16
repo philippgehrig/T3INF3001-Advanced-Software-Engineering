@@ -14,9 +14,9 @@ public class Calculator {
 	 * @param pack the packet for which to calculate the shipping costs
 	 * @return the calculated shipping costs
 	 * @throws IllegalArgumentException if the shipping cost is invalid
-	 * @throws Exception if the package is not in valid dimensions
+	 * @throws NotValidDimensionsException if the package is not in valid dimensions
 	 */
-	public double calcShippingCosts(Packet pack) throws Exception {
+	public double calcShippingCosts(Packet pack) throws NotValidDimensionsException, IllegalArgumentException {
 		// Validate inputs
 		if (pack.length <= 0 || pack.width <= 0 || pack.height <= 0 || pack.weight <= 0) {
 			throw new IllegalArgumentException("Dimensions and weight must be positive values.");
@@ -46,7 +46,7 @@ public class Calculator {
 		} else if (length <= 1200 && width <= 600 && height <= 600 && pack.weight <= 31000) {
 			shippingCosts = 14.99;
 		} else {
-			throw new Exception("Package not in valid dimensions");
+			throw new NotValidDimensionsException("Package not in valid dimensions");
 		}
 
 		return shippingCosts;

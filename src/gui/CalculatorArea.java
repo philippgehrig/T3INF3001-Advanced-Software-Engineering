@@ -1,6 +1,7 @@
 package gui;
 
 import control.Calculator;
+import control.NotValidDimensionsException;
 import data.Packet;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
@@ -49,10 +50,8 @@ public class CalculatorArea extends GridPane {
 
 	/**
 	 * Calculates the shipping costs based on the user input values.
-	 *
-	 * @return the calculated shipping costs
 	 */
-	private double calcShippingCosts() {
+	private void calcShippingCosts() {
 		Calculator calc = new Calculator();
 
 		try {
@@ -68,8 +67,7 @@ public class CalculatorArea extends GridPane {
 
 			// show result
 			shippingCostLabel.setText(String.valueOf(costs));
-			return costs;
-		} catch (Exception e) {
+		} catch (IllegalArgumentException | NotValidDimensionsException e) {
 			// disable previous result display
 			shippingCostLabel.setText("");
 
@@ -79,7 +77,6 @@ public class CalculatorArea extends GridPane {
 			alert.setHeaderText("Invalid Input");
 			alert.setContentText(e.getMessage()); // returns the error message from the exception
 			alert.showAndWait();
-			return -1;
 		}
 	}
 
