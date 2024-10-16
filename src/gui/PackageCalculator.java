@@ -32,7 +32,6 @@ public class PackageCalculator extends Application {
 
 	// GUI areas
 	public ToolbarArea toolbarArea = new ToolbarArea();
-	public ExplorerArea explorerArea = new ExplorerArea();
 	public CalculatorArea editorArea = new CalculatorArea();
 	public InspectorArea inspectorArea = new InspectorArea();
 	public MessagesArea messagesArea = new MessagesArea();
@@ -76,16 +75,11 @@ public class PackageCalculator extends Application {
 		tdSplitPane.getItems().addAll(lr2SplitPane, messagesArea);
 		tdSplitPane.setDividerPositions(0.9f, 0.1f);
 
-		// lrSplitPane
-		SplitPane lrSplitPane = new SplitPane();
-		lrSplitPane.getItems().addAll(explorerArea, tdSplitPane);
-		lrSplitPane.setDividerPositions(0.2f, 0.8f);
-
 
 		// add all areas
 		BorderPane mainPane = new BorderPane();
 		mainPane.setTop(toolbarArea);
-		mainPane.setCenter(lrSplitPane);
+		mainPane.setCenter(tdSplitPane);
 
 		// show main pane
 		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();

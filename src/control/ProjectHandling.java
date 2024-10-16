@@ -17,8 +17,6 @@ public class ProjectHandling {
 	public static void openProject(String rootPath) {
 		// update window title
 		PackageCalculator.getInstance().getPrimaryStage().setTitle(PackageCalculator.APPNAME + " – " + rootPath);
-		// load tree in explorer
-		PackageCalculator.getInstance().explorerArea.loadNewTree(rootPath);
 		// remember open project
 		PackageCalculator.getInstance().rootPath = rootPath;
 	}

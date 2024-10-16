@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 /**
  * The CalculatorArea class represents the area in the application where users can input package dimensions and weight
  * to calculate shipping costs.
+ * @see Calculator
  */
 public class CalculatorArea extends GridPane {
 
@@ -39,18 +40,20 @@ public class CalculatorArea extends GridPane {
 
 	// output label
 	/**
-	 * Label for displaying the calculated shipping cost.
+	 * Label for displaying the calculated shipping costs.
 	 */
 	Label shippingCostLabel = new Label("?");
 
 	// buttons
 	/**
-	 * Button to trigger the calculation of shipping costs.
+	 * Button for calculating the shipping costs based on the user input values.
+	 * Clicking this button will call the {@link #calcShippingCosts()} method.
 	 */
 	Button calcButton = new Button("Calculate");
 
 	/**
 	 * Calculates the shipping costs based on the user input values.
+	 * @see Calculator#calcShippingCosts(Packet)
 	 */
 	private void calcShippingCosts() {
 		Calculator calc = new Calculator();
