@@ -11,7 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 /**
- * The CalculatorArea class represents the area in the application where users can input package dimensions and weight to calculate shipping costs.
+ * The CalculatorArea class represents the area in the application where users can input package dimensions and weight
+ * to calculate shipping costs.
  */
 public class CalculatorArea extends GridPane {
 

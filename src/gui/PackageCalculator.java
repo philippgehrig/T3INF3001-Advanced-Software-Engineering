@@ -36,7 +36,6 @@ public class PackageCalculator extends Application {
 	public CalculatorArea editorArea = new CalculatorArea();
 	public InspectorArea inspectorArea = new InspectorArea();
 	public MessagesArea messagesArea = new MessagesArea();
-	public StatusArea statusArea = new StatusArea();
 
 	/** Root path to the currently open project. */
 	public String rootPath;
@@ -82,11 +81,11 @@ public class PackageCalculator extends Application {
 		lrSplitPane.getItems().addAll(explorerArea, tdSplitPane);
 		lrSplitPane.setDividerPositions(0.2f, 0.8f);
 
+
 		// add all areas
 		BorderPane mainPane = new BorderPane();
 		mainPane.setTop(toolbarArea);
 		mainPane.setCenter(lrSplitPane);
-		mainPane.setBottom(statusArea);
 
 		// show main pane
 		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();

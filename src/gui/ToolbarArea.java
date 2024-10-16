@@ -11,7 +11,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * The ToolbarArea class represents the toolbar in the application, providing buttons for various actions such as opening a project, creating a new file, and showing help information.
+ * The ToolbarArea class represents the toolbar in the application, providing buttons for various actions such as
+ * opening a project, creating a new file, and showing help information.
  */
 public class ToolbarArea extends ToolBar {
 
