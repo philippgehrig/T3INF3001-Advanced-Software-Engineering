@@ -9,11 +9,12 @@ import java.util.Arrays;
 public class Calculator {
 
 	/**
-	 * Calculates the shipping costs for a given packet.
+	 * Calculates the shipping costs for a given packet
 	 *
 	 * @param pack the packet for which to calculate the shipping costs
 	 * @return the calculated shipping costs
-	 * @throws Exception if the shipping cost is invalid
+	 * @throws IllegalArgumentException if the shipping cost is invalid
+	 * @throws Exception if the package is not in valid dimensions
 	 */
 	public double calcShippingCosts(Packet pack) throws Exception {
 		// Validate inputs

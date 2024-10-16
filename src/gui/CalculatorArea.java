@@ -70,11 +70,14 @@ public class CalculatorArea extends GridPane {
 			shippingCostLabel.setText(String.valueOf(costs));
 			return costs;
 		} catch (Exception e) {
-			// show error message
-			Alert alert = new Alert(Alert.AlertType.ERROR);
+			// disable previous result display
+			shippingCostLabel.setText("");
+
+			// show error message popup with JavaFX.alert
+            Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText("Invalid Input");
-			alert.setContentText(e.getMessage());
+			alert.setContentText(e.getMessage()); // returns the error message from the exception
 			alert.showAndWait();
 			return -1;
 		}
