@@ -73,6 +73,7 @@ public class CalculatorArea extends GridPane {
 			shippingCostLabel.setText(String.valueOf(costs));
 		} catch (IllegalArgumentException | NotValidDimensionsException e) {
 
+			// show error message in messages area - disabled because of usage of JavaFX Alert
 			// PackageCalculator.getInstance().messagesArea.setMessage("An unexpected error occurred: " + e.getMessage());
 
 			// disable previous result display
