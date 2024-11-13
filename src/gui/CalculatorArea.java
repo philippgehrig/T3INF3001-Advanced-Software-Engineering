@@ -17,7 +17,6 @@ import javafx.scene.layout.GridPane;
  */
 public class CalculatorArea extends GridPane {
 
-	// input fields
 	/**
 	 * TextField for inputting the length of the package.
 	 */
@@ -38,24 +37,22 @@ public class CalculatorArea extends GridPane {
 	 */
 	TextField weightTextField = new TextField();
 
-	// output label
 	/**
 	 * Label for displaying the calculated shipping costs.
 	 */
 	Label shippingCostLabel = new Label("?");
 
-	// buttons
 	/**
 	 * Button for calculating the shipping costs based on the user input values.
-	 * Clicking this button will call the {@link #HandleCalculatorInput()} method.
+	 * Clicking this button will call the {@link #HandleCalculatorIO()} method.
 	 */
 	Button calcButton = new Button("Calculate");
 
 	/**
-	 * Calculates the shipping costs based on the user input values.
-	 * @see Calculator#calcShippingCosts(Packet)
+	 * Handles all user input and calls the {@link Calculator#calcShippingCosts(Packet)} method to
+	 * calculate the shipping costs. Also handles displaying of output and error messages.
 	 */
-	private void HandleCalculatorInput() {
+	private void HandleCalculatorIO() {
 		Calculator calc = new Calculator();
 
 		try {
@@ -119,6 +116,6 @@ public class CalculatorArea extends GridPane {
 		this.add(calcButton, 3, 5);
 
 		// set action listeners
-		calcButton.setOnAction(ae -> HandleCalculatorInput());
+		calcButton.setOnAction(ae -> HandleCalculatorIO());
 	}
 }
