@@ -47,7 +47,7 @@ public class CalculatorArea extends GridPane {
 	// buttons
 	/**
 	 * Button for calculating the shipping costs based on the user input values.
-	 * Clicking this button will call the {@link #calcShippingCosts()} method.
+	 * Clicking this button will call the {@link #HandleCalculatorInput()} method.
 	 */
 	Button calcButton = new Button("Calculate");
 
@@ -55,7 +55,7 @@ public class CalculatorArea extends GridPane {
 	 * Calculates the shipping costs based on the user input values.
 	 * @see Calculator#calcShippingCosts(Packet)
 	 */
-	private void calcShippingCosts() {
+	private void HandleCalculatorInput() {
 		Calculator calc = new Calculator();
 
 		try {
@@ -119,6 +119,6 @@ public class CalculatorArea extends GridPane {
 		this.add(calcButton, 3, 5);
 
 		// set action listeners
-		calcButton.setOnAction(ae -> calcShippingCosts());
+		calcButton.setOnAction(ae -> HandleCalculatorInput());
 	}
 }
