@@ -18,9 +18,7 @@ public class Calculator {
 	 */
 	public double calcShippingCosts(Packet pack) throws NotValidDimensionsException, IllegalArgumentException {
 		// Validate inputs
-		if (pack.length <= 0 || pack.width <= 0 || pack.height <= 0 || pack.weight <= 0) {
-			throw new IllegalArgumentException("Dimensions and weight must be positive values.");
-		}
+		checkInputs(pack.length, pack.width, pack.height, pack.weight);
 
 		double shippingCosts;
 
@@ -50,5 +48,31 @@ public class Calculator {
 		}
 
 		return shippingCosts;
+	}
+
+	/**
+	 * Checks if the dimensions and weight of a package are valid
+	 * @param length
+	 * @param width
+	 * @param height
+	 * @param weight
+	 * @throws NotValidDimensionsException for too large packages
+	 * @throws IllegalArgumentException for negative Values
+	 */
+	public void checkInputs(int length, int width, int height, int weight) throws NotValidDimensionsException, IllegalArgumentException {
+		if (length <= 0 || width <= 0 || height <= 0 || weight <= 0) {
+			throw new IllegalArgumentException("Dimensions and weight must be positive values.");
+		}
+
+		int[] dimensions = {length, width, height};
+		Arrays.sort(dimensions);
+
+		length = dimensions[2];
+		width = dimensions[1];
+		height = dimensions[0];
+
+		if (length > 1200 || width > 600 || height > 600 || weight > 31000) {
+			throw new NotValidDimensionsException("Package not in valid dimensions");
+		}
 	}
 }

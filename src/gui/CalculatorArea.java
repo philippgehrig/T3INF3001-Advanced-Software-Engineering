@@ -44,7 +44,7 @@ public class CalculatorArea extends GridPane {
 
 	/**
 	 * Button for calculating the shipping costs based on the user input values.
-	 * Clicking this button will call the {@link #HandleCalculatorIO()} method.
+	 * Clicking this button will call the {@link #handleCalculatorIO()} method.
 	 */
 	Button calcButton = new Button("Calculate");
 
@@ -52,7 +52,7 @@ public class CalculatorArea extends GridPane {
 	 * Handles all user input and calls the {@link Calculator#calcShippingCosts(Packet)} method to
 	 * calculate the shipping costs. Also handles displaying of output and error messages.
 	 */
-	private void HandleCalculatorIO() {
+	private void handleCalculatorIO() {
 		Calculator calc = new Calculator();
 
 		try {
@@ -61,6 +61,9 @@ public class CalculatorArea extends GridPane {
 			int width = Integer.parseInt(widthTextField.getText());
 			int height = Integer.parseInt(heightTextField.getText());
 			int weight = Integer.parseInt(weightTextField.getText());
+
+			// validate user input
+			calc.checkInputs(length, width, height, weight);
 
 			// perform calculation
 			Packet packet = new Packet(length, width, height, weight);
@@ -71,7 +74,7 @@ public class CalculatorArea extends GridPane {
 		} catch (IllegalArgumentException | NotValidDimensionsException e) {
 
 			// show error message in messages area - disabled because of usage of JavaFX Alert
-			// PackageCalculator.getInstance().messagesArea.setMessage("An unexpected error occurred: " + e.getMessage());
+			PackageCalculator.getInstance().messagesArea.setMessage("An unexpected error occurred: " + e.getMessage());
 
 			// disable previous result display
 			shippingCostLabel.setText("");
@@ -116,6 +119,6 @@ public class CalculatorArea extends GridPane {
 		this.add(calcButton, 3, 5);
 
 		// set action listeners
-		calcButton.setOnAction(ae -> HandleCalculatorIO());
+		calcButton.setOnAction(ae -> handleCalculatorIO());
 	}
 }

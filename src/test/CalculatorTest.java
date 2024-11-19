@@ -23,7 +23,7 @@ class CalculatorTest {
         calculator = new Calculator();
     }
 
-    static Stream<Map.Entry<Packet, Double>> createPackages() {
+    static Stream<Map.Entry<Packet, Double>> createValidPackages() {
         Map<Packet, Double> packages = new HashMap<>();
         packages.put(new Packet(300, 300, 150, 1000), 3.89);
         packages.put(new Packet(600, 300, 150, 2000), 4.39);
@@ -49,26 +49,24 @@ class CalculatorTest {
         );
     }
 
-    static Stream<String> createStringInputs() {
+    static Stream<Packet> createOutOfBoundsPackages() {
         return Stream.of(
-                "invalid",
-                "123abc",
-                "",
-                "null",
-                " "
+                new Packet(1300, 600, 600, 1000),  // Exceeds length and girth limit
+                new Packet(1200, 600, 600, 32000), // Exceeds weight limit
+                new Packet(1201, 400, 400, 1000)   // Just over length limit
         );
     }
 
     @ParameterizedTest
-    @MethodSource("createPackages")
-    void testCalcShippingCostWithAllSizePackages(Map.Entry<Packet, Double> entry) {
+    @MethodSource("createValidPackages")
+    void testCalcShippingCostWithValidPackages(Map.Entry<Packet, Double> entry) {
         Packet packet = entry.getKey();
         double expectedCost = entry.getValue();
         try {
             double calcShippingCosts = calculator.calcShippingCosts(packet);
             assertEquals(expectedCost, calcShippingCosts);
         } catch (NotValidDimensionsException e) {
-            fail("Exception thrown: " + e.getMessage());
+            fail("Exception thrown for valid package: " + e.getMessage());
         }
     }
 
@@ -79,17 +77,8 @@ class CalculatorTest {
     }
 
     @ParameterizedTest
-    @MethodSource("createStringInputs")
-    void testCalcShippingCostWithStringInputs(String input) {
-        assertThrows(ClassCastException.class, () -> {
-            Packet packet = (Packet) (Object) input; // Simulate invalid cast
-            calculator.calcShippingCosts(packet);
-        });
-    }
-
-    @Test
-    void testCalcShippingCostWithMaxInt() {
-        Packet packet = new Packet(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
+    @MethodSource("createOutOfBoundsPackages")
+    void testCalcShippingCostWithOutOfBoundsPackages(Packet packet) {
         assertThrows(NotValidDimensionsException.class, () -> calculator.calcShippingCosts(packet));
     }
 }
