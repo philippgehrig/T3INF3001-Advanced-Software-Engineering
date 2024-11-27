@@ -31,7 +31,7 @@ public class Calculator {
 
 		// Determine shipping costs based on sorted dimensions and weight
 		if (pack.getLength() <= 300 && pack.getWidth() <= 300 && pack.getHeight() <= 150 && pack.getWeight() <= 1000) {
-			return shippingCosts.get(0);
+			return shippingCosts.getFirst();
 		} else if (pack.getLength() <= 600 && pack.getWidth() <= 300 && pack.getHeight() <= 150
 				&& pack.getWeight() <= 2000) {
 			return shippingCosts.get(1);
@@ -48,7 +48,4 @@ public class Calculator {
 			throw new NotValidDimensionsException("Package not in valid dimensions");
 		}
 	}
-
-
-
 }

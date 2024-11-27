@@ -33,8 +33,6 @@ public class PackageCalculator extends Application {
 	// GUI areas
 	public ToolbarArea toolbarArea = new ToolbarArea();
 	public CalculatorArea editorArea = new CalculatorArea();
-	public InspectorArea inspectorArea = new InspectorArea();
-	public MessagesArea messagesArea = new MessagesArea();
 
 	/** Root path to the currently open project. */
 	public String rootPath;
@@ -64,17 +62,11 @@ public class PackageCalculator extends Application {
 		// remember stage for subwindows
 		this.primaryStage = primaryStage;
 
-		// lr2SplitPane
-		SplitPane lr2SplitPane = new SplitPane();
-		lr2SplitPane.getItems().addAll(editorArea, inspectorArea);
-		lr2SplitPane.setDividerPositions(0.8f, 0.2f);
-
 		// tdSplitPane
 		SplitPane tdSplitPane = new SplitPane();
 		tdSplitPane.setOrientation(Orientation.VERTICAL);
-		tdSplitPane.getItems().addAll(lr2SplitPane, messagesArea);
-		tdSplitPane.setDividerPositions(0.9f, 0.1f);
-
+		tdSplitPane.getItems().add(editorArea);
+		tdSplitPane.setDividerPositions(0.9f);
 
 		// add all areas
 		BorderPane mainPane = new BorderPane();
@@ -88,8 +80,6 @@ public class PackageCalculator extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
-		// load default workspace
-		// ProjectHandling.openProject("/Users/...");
 	}
 
 	/**

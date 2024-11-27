@@ -29,10 +29,24 @@ class CalculatorTest {
         List<Double> shippingCosts = importer.importShippingCosts("src/data/shippingCosts.csv");
 
         Map<Packet, Double> packages = new HashMap<>();
-        packages.put(new Packet(300, 300, 150, 1000), shippingCosts.get(0));
+        packages.put(new Packet(300, 300, 150, 1000), shippingCosts.getFirst());
+        packages.put(new Packet(301, 300, 150, 1000), shippingCosts.get(1));
+        packages.put(new Packet(300, 301, 150, 1000), shippingCosts.get(1));
+        packages.put(new Packet(300, 301, 151, 1000), shippingCosts.get(2));
+        packages.put(new Packet(300, 300, 150, 1001), shippingCosts.get(1));
+
         packages.put(new Packet(600, 300, 150, 2000), shippingCosts.get(1));
-        packages.put(new Packet(1200, 400, 400, 5000), shippingCosts.get(2));
-        packages.put(new Packet(1200, 400, 400, 10000), shippingCosts.get(3));
+        packages.put(new Packet(601, 300, 150, 2000), shippingCosts.get(2));
+        packages.put(new Packet(600, 301, 150, 2000), shippingCosts.get(2));
+        packages.put(new Packet(600, 300, 151, 2000), shippingCosts.get(2));
+        packages.put(new Packet(600, 300, 150, 2001), shippingCosts.get(2));
+
+        packages.put(new Packet(1200, 1, 1, 5000), shippingCosts.get(2));
+        packages.put(new Packet(1, 1, 1, 5001), shippingCosts.get(3));
+
+        packages.put(new Packet(1200, 1, 1, 10000), shippingCosts.get(3));
+        packages.put(new Packet(1, 1, 1, 10001), shippingCosts.get(4));
+
         packages.put(new Packet(1200, 600, 600, 31000), shippingCosts.get(4));
 
         return packages.entrySet().stream();

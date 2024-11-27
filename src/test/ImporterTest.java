@@ -24,6 +24,7 @@ class ImporterTest {
     private static final String NOT_NULL_MESSAGE = "The shipping costs list should not be null";
     private static final String EMPTY_MESSAGE = "The shipping costs list should be empty";
 
+    // logger of impoter for deactivation
     private static final Logger logger = Logger.getLogger(Importer.class.getName());
     private final Level originalLogLevel = logger.getLevel();
 
