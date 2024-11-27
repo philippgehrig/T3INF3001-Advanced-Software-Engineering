@@ -29,7 +29,7 @@ class PacketTest {
         assertEquals(200, packet.getWidth());
         assertEquals(100, packet.getHeight());
         assertEquals(500, packet.getWeight());
-        assertEquals(1000, packet.getGirth());
+        assertEquals(1000, packet.getGirth()); // 1*L + 2*W
 
         packet.setWidth(300);
         assertEquals(400, packet.getLength());

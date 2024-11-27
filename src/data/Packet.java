@@ -90,7 +90,10 @@ public class Packet {
 
     public void setLength(int length) {
         checkInputs(length, this.width, this.height, this.weight);
-        this.length = length;
+        int[] orderedDimensions = orderDimensions(length, this.width, this.height);
+        this.length = orderedDimensions[2];
+        this.width = orderedDimensions[1];
+        this.height = orderedDimensions[0];
         this.girth = calculateGirth(this.length, this.width, this.height);
     }
 
@@ -100,7 +103,10 @@ public class Packet {
 
     public void setWidth(int width) {
         checkInputs(this.length, width, this.height, this.weight);
-        this.width = width;
+        int[] orderedDimensions = orderDimensions(this.length, width, this.height);
+        this.length = orderedDimensions[2];
+        this.width = orderedDimensions[1];
+        this.height = orderedDimensions[0];
         this.girth = calculateGirth(this.length, this.width, this.height);
     }
 
@@ -110,7 +116,10 @@ public class Packet {
 
     public void setHeight(int height) {
         checkInputs(this.length, this.width, height, this.weight);
-        this.height = height;
+        int[] orderedDimensions = orderDimensions(this.length, this.width, height);
+        this.length = orderedDimensions[2];
+        this.width = orderedDimensions[1];
+        this.height = orderedDimensions[0];
         this.girth = calculateGirth(this.length, this.width, this.height);
     }
 

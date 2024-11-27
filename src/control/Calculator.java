@@ -1,6 +1,9 @@
 package control;
 
+import data.Importer;
 import data.Packet;
+
+import java.util.List;
 
 /**
  * The Calculator class provides a method to calculate shipping costs based on the dimensions and weight of a packet.
@@ -24,26 +27,26 @@ public class Calculator {
 			throw new IllegalArgumentException("Dimensions and weight must be positive values.");
 		}
 
-		double shippingCosts;
+		List<Double> shippingCosts = new Importer().importShippingCosts("src/data/shippingCosts.csv");
 
 		// Determine shipping costs based on sorted dimensions and weight
 		if (pack.getLength() <= 300 && pack.getWidth() <= 300 && pack.getHeight() <= 150 && pack.getWeight() <= 1000) {
-			shippingCosts = 3.89;
-		} else if (pack.getLength() <= 600 && pack.getWidth() <= 300 && pack.getHeight() <= 150 && pack.getWeight() <= 2000) {
-			shippingCosts = 4.39;
+			return shippingCosts.get(0);
+		} else if (pack.getLength() <= 600 && pack.getWidth() <= 300 && pack.getHeight() <= 150
+				&& pack.getWeight() <= 2000) {
+			return shippingCosts.get(1);
 		} else if (pack.getLength() <= 1200 && pack.getWidth() <= 600 && pack.getHeight() <= 600
 				&& pack.getGirth() <= 3000 && pack.getWeight() <= 5000) {
-			shippingCosts = 5.89;
+			return shippingCosts.get(2);
 		} else if (pack.getLength() <= 1200 && pack.getWidth() <= 600 && pack.getHeight() <= 600
 				&& pack.getGirth() <= 3000 && pack.getWeight() <= 10000) {
-			shippingCosts = 7.99;
-		} else if (pack.getLength() <= 1200 && pack.getWidth() <= 600 && pack.getHeight() <= 600 && pack.getWeight() <= 31000) {
-			shippingCosts = 14.99;
+			return shippingCosts.get(3);
+		} else if (pack.getLength() <= 1200 && pack.getWidth() <= 600 && pack.getHeight() <= 600
+				&& pack.getWeight() <= 31000) {
+			return shippingCosts.get(4);
 		} else {
 			throw new NotValidDimensionsException("Package not in valid dimensions");
 		}
-
-		return shippingCosts;
 	}
 
 
