@@ -27,6 +27,8 @@ class ImporterTest {
     private static final Logger logger = Logger.getLogger(Importer.class.getName());
     private final Level originalLogLevel = logger.getLevel();
 
+    private final Importer importer = new Importer();
+
     @BeforeEach
     void setUp() throws IOException {
         try (FileWriter writer = new FileWriter(VALID_FILE_PATH)) {
@@ -46,7 +48,7 @@ class ImporterTest {
 
     @Test
     void testImportShippingCosts() {
-        Importer importer = new Importer();
+
         List<Double> shippingCosts = importer.importShippingCosts(VALID_FILE_PATH);
 
         assertNotNull(shippingCosts, NOT_NULL_MESSAGE);
@@ -63,7 +65,6 @@ class ImporterTest {
     void testImportShippingCostsFileNotFound() {
         logger.setLevel(Level.OFF);
 
-        Importer importer = new Importer();
         List<Double> shippingCosts = importer.importShippingCosts(NONEXISTENT_FILE_PATH);
 
         assertNotNull(shippingCosts, NOT_NULL_MESSAGE);
@@ -76,7 +77,6 @@ class ImporterTest {
     void testImportShippingCostsInvalidFormat() {
         logger.setLevel(Level.OFF);
 
-        Importer importer = new Importer();
         List<Double> shippingCosts = importer.importShippingCosts(INVALID_FORMAT_FILE_PATH);
 
         assertNotNull(shippingCosts, NOT_NULL_MESSAGE);
