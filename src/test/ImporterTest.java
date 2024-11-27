@@ -20,8 +20,12 @@ class ImporterTest {
     private static final String VALID_FILE_PATH = "src/data/shippingCost.csv";
     private static final String INVALID_FORMAT_FILE_PATH = "src/data/invalidFormat.csv";
     private static final String NONEXISTENT_FILE_PATH = "src/data/nonexistent.csv";
+
+    private static final String NOT_NULL_MESSAGE = "The shipping costs list should not be null";
+    private static final String EMPTY_MESSAGE = "The shipping costs list should be empty";
+
     private static final Logger logger = Logger.getLogger(Importer.class.getName());
-    private Level originalLogLevel;
+    private final Level originalLogLevel = logger.getLevel();
 
     @BeforeEach
     void setUp() throws IOException {
@@ -45,7 +49,7 @@ class ImporterTest {
         Importer importer = new Importer();
         List<Double> shippingCosts = importer.importShippingCosts(VALID_FILE_PATH);
 
-        assertNotNull(shippingCosts, "The shipping costs list should not be null");
+        assertNotNull(shippingCosts, NOT_NULL_MESSAGE);
         assertEquals(5, shippingCosts.size(), "The shipping costs list should contain 5 elements");
 
         assertEquals(3.89, shippingCosts.get(0), 0.01);
@@ -57,29 +61,27 @@ class ImporterTest {
 
     @Test
     void testImportShippingCostsFileNotFound() {
-        originalLogLevel = logger.getLevel();
-        logger.setLevel(Level.OFF); // disable logging since errors are expected in this test case
+        logger.setLevel(Level.OFF);
 
         Importer importer = new Importer();
         List<Double> shippingCosts = importer.importShippingCosts(NONEXISTENT_FILE_PATH);
 
-        assertNotNull(shippingCosts, "The shipping costs list should not be null");
-        assertTrue(shippingCosts.isEmpty(), "The shipping costs list should be empty");
+        assertNotNull(shippingCosts, NOT_NULL_MESSAGE);
+        assertTrue(shippingCosts.isEmpty(), EMPTY_MESSAGE);
 
-        logger.setLevel(originalLogLevel); // enable logging again
+        logger.setLevel(originalLogLevel);
     }
 
     @Test
     void testImportShippingCostsInvalidFormat() {
-        Level originalLogLevel = logger.getLevel();
-        logger.setLevel(Level.OFF); // disable logging since errors are expected in this test case
+        logger.setLevel(Level.OFF);
 
         Importer importer = new Importer();
         List<Double> shippingCosts = importer.importShippingCosts(INVALID_FORMAT_FILE_PATH);
 
-        assertNotNull(shippingCosts, "The shipping costs list should not be null");
-        assertTrue(shippingCosts.isEmpty(), "The shipping costs list should be empty");
+        assertNotNull(shippingCosts, NOT_NULL_MESSAGE);
+        assertTrue(shippingCosts.isEmpty(), EMPTY_MESSAGE);
 
-        logger.setLevel(originalLogLevel); // enable logging again
+        logger.setLevel(originalLogLevel);
     }
 }
