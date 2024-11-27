@@ -8,19 +8,19 @@ import java.util.Arrays;
 public class Packet {
 
     /** The length of the packet in millimeters */
-    public int length;
+    private int length;
 
     /** The width of the packet in millimeters */
-    public int width;
+    private int width;
 
     /** The height of the packet in millimeters */
-    public int height;
+    private int height;
 
     /** The weight of the packet in grams */
-    public int weight;
+    private int weight;
 
     /** The girth of the packet in millimeters */
-    public int girth;
+    private int girth;
 
     /**
      * Creates a new packet with the given dimensions and weight.
@@ -31,7 +31,6 @@ public class Packet {
      * @param weight the weight of the packet in grams
      */
     public Packet(int length, int width, int height, int weight) {
-
         checkInputs(length, width, height, weight); // Check if the dimensions and weight are valid
 
         int[] orderedDimensions = orderDimensions(length, width, height);
@@ -81,5 +80,50 @@ public class Packet {
      */
     private int calculateGirth(int length, int width, int height) {
         return length + 2 * width + 2 * height;
+    }
+
+    // Getters and Setters
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        checkInputs(length, this.width, this.height, this.weight);
+        this.length = length;
+        this.girth = calculateGirth(this.length, this.width, this.height);
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        checkInputs(this.length, width, this.height, this.weight);
+        this.width = width;
+        this.girth = calculateGirth(this.length, this.width, this.height);
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        checkInputs(this.length, this.width, height, this.weight);
+        this.height = height;
+        this.girth = calculateGirth(this.length, this.width, this.height);
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        checkInputs(this.length, this.width, this.height, weight);
+        this.weight = weight;
+    }
+
+    public int getGirth() {
+        return girth;
     }
 }

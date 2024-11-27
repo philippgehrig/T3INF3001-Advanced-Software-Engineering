@@ -19,7 +19,7 @@ public class Calculator {
 
 		// Check if the dimensions and weight are valid
 		try {
-			pack.checkInputs(pack.length, pack.width, pack.height, pack.weight);
+			pack.checkInputs(pack.getLength(), pack.getWidth(), pack.getHeight(), pack.getWeight());
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException("Dimensions and weight must be positive values.");
 		}
@@ -27,17 +27,17 @@ public class Calculator {
 		double shippingCosts;
 
 		// Determine shipping costs based on sorted dimensions and weight
-		if (pack.length <= 300 && pack.width <= 300 && pack.height <= 150 && pack.weight <= 1000) {
+		if (pack.getLength() <= 300 && pack.getWidth() <= 300 && pack.getHeight() <= 150 && pack.getWeight() <= 1000) {
 			shippingCosts = 3.89;
-		} else if (pack.length <= 600 && pack.width <= 300 && pack.height <= 150 && pack.weight <= 2000) {
+		} else if (pack.getLength() <= 600 && pack.getWidth() <= 300 && pack.getHeight() <= 150 && pack.getWeight() <= 2000) {
 			shippingCosts = 4.39;
-		} else if (pack.length <= 1200 && pack.width <= 600 && pack.height <= 600
-				&& pack.girth <= 3000 && pack.weight <= 5000) {
+		} else if (pack.getLength() <= 1200 && pack.getWidth() <= 600 && pack.getHeight() <= 600
+				&& pack.getGirth() <= 3000 && pack.getWeight() <= 5000) {
 			shippingCosts = 5.89;
-		} else if (pack.length <= 1200 && pack.width <= 600 && pack.height <= 600
-				&& pack.girth <= 3000 && pack.weight <= 10000) {
+		} else if (pack.getLength() <= 1200 && pack.getWidth() <= 600 && pack.getHeight() <= 600
+				&& pack.getGirth() <= 3000 && pack.getWeight() <= 10000) {
 			shippingCosts = 7.99;
-		} else if (pack.length <= 1200 && pack.width <= 600 && pack.height <= 600 && pack.weight <= 31000) {
+		} else if (pack.getLength() <= 1200 && pack.getWidth() <= 600 && pack.getHeight() <= 600 && pack.getWeight() <= 31000) {
 			shippingCosts = 14.99;
 		} else {
 			throw new NotValidDimensionsException("Package not in valid dimensions");

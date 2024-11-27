@@ -10,13 +10,47 @@ import static org.junit.jupiter.api.Assertions.*;
 class PacketTest {
 
     @Test
-    void testValidPacket() {
+    void testPacketGetters() {
         Packet packet = new Packet(300, 200, 100, 500);
-        assertEquals(300, packet.length);
-        assertEquals(200, packet.width);
-        assertEquals(100, packet.height);
-        assertEquals(500, packet.weight);
-        assertEquals(900, packet.girth);
+
+        assertEquals(300, packet.getLength());
+        assertEquals(200, packet.getWidth());
+        assertEquals(100, packet.getHeight());
+        assertEquals(500, packet.getWeight());
+        assertEquals(900, packet.getGirth());
+    }
+
+    @Test
+    void testPacketSetters() {
+        Packet packet = new Packet(300, 200, 100, 500);
+
+        packet.setLength(400);
+        assertEquals(400, packet.getLength());
+        assertEquals(200, packet.getWidth());
+        assertEquals(100, packet.getHeight());
+        assertEquals(500, packet.getWeight());
+        assertEquals(1000, packet.getGirth());
+
+        packet.setWidth(300);
+        assertEquals(400, packet.getLength());
+        assertEquals(300, packet.getWidth());
+        assertEquals(100, packet.getHeight());
+        assertEquals(500, packet.getWeight());
+        assertEquals(1200, packet.getGirth());
+
+        packet.setHeight(200);
+        assertEquals(400, packet.getLength());
+        assertEquals(300, packet.getWidth());
+        assertEquals(200, packet.getHeight());
+        assertEquals(500, packet.getWeight());
+        assertEquals(1400, packet.getGirth());
+
+        packet.setWeight(1000);
+        assertEquals(400, packet.getLength());
+        assertEquals(300, packet.getWidth());
+        assertEquals(200, packet.getHeight());
+        assertEquals(1000, packet.getWeight());
+        assertEquals(1400, packet.getGirth());
     }
 
     @ParameterizedTest
@@ -50,6 +84,6 @@ class PacketTest {
         // girth = 1 * L + 2 * W + 2 * H with ordered dimensions => 1 * 300 + 2 * 200 + 2 * 100 = 900
 
         Packet packet = new Packet(300, 200, 100, 500);
-        assertEquals(900, packet.girth);
+        assertEquals(900, packet.getGirth());
     }
 }
