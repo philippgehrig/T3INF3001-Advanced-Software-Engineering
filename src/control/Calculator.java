@@ -15,9 +15,14 @@ public class Calculator {
 	 * @throws IllegalArgumentException if the shipping cost is invalid
 	 * @throws NotValidDimensionsException if the package is not in valid dimensions
 	 */
-	public double calcShippingCosts(Packet pack) throws NotValidDimensionsException {
-		// Validate inputs
-		pack.checkInputs(pack.length, pack.width, pack.height, pack.weight);
+	public double calcShippingCosts(Packet pack) throws NotValidDimensionsException, IllegalArgumentException{
+
+		// Check if the dimensions and weight are valid
+		try {
+			pack.checkInputs(pack.length, pack.width, pack.height, pack.weight);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("Dimensions and weight must be positive values.");
+		}
 
 		double shippingCosts;
 
