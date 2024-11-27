@@ -2,12 +2,14 @@ package test;
 
 import control.Calculator;
 import control.NotValidDimensionsException;
+import data.Importer;
 import data.Packet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -23,12 +25,15 @@ class CalculatorTest {
     }
 
     static Stream<Map.Entry<Packet, Double>> createValidPackages() {
+        Importer importer = new Importer();
+        List<Double> shippingCosts = importer.importShippingCosts("src/data/shippingCost.csv");
+
         Map<Packet, Double> packages = new HashMap<>();
-        packages.put(new Packet(300, 300, 150, 1000), 3.89);
-        packages.put(new Packet(600, 300, 150, 2000), 4.39);
-        packages.put(new Packet(1200, 400, 400, 5000), 5.89);
-        packages.put(new Packet(1200, 400, 400, 10000), 7.99);
-        packages.put(new Packet(1200, 600, 600, 31000), 14.99);
+        packages.put(new Packet(300, 300, 150, 1000), shippingCosts.get(0));
+        packages.put(new Packet(600, 300, 150, 2000), shippingCosts.get(1));
+        packages.put(new Packet(1200, 400, 400, 5000), shippingCosts.get(2));
+        packages.put(new Packet(1200, 400, 400, 10000), shippingCosts.get(3));
+        packages.put(new Packet(1200, 600, 600, 31000), shippingCosts.get(4));
 
         return packages.entrySet().stream();
     }
