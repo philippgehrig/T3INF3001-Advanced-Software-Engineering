@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,6 +20,8 @@ class ImporterTest {
     private static final String VALID_FILE_PATH = "src/data/shippingCost.csv";
     private static final String INVALID_FORMAT_FILE_PATH = "src/data/invalidFormat.csv";
     private static final String NONEXISTENT_FILE_PATH = "src/data/nonexistent.csv";
+    private static final Logger logger = Logger.getLogger(Importer.class.getName());
+    private Level originalLogLevel;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -53,19 +57,29 @@ class ImporterTest {
 
     @Test
     void testImportShippingCostsFileNotFound() {
+        originalLogLevel = logger.getLevel();
+        logger.setLevel(Level.OFF); // disable logging since errors are expected in this test case
+
         Importer importer = new Importer();
         List<Double> shippingCosts = importer.importShippingCosts(NONEXISTENT_FILE_PATH);
 
-        assertNotNull(shippingCosts, "The shipping costs list should not be null even if the file is not found");
-        assertTrue(shippingCosts.isEmpty(), "The shipping costs list should be empty if the file is not found");
+        assertNotNull(shippingCosts, "The shipping costs list should not be null");
+        assertTrue(shippingCosts.isEmpty(), "The shipping costs list should be empty");
+
+        logger.setLevel(originalLogLevel); // enable logging again
     }
 
     @Test
     void testImportShippingCostsInvalidFormat() {
+        Level originalLogLevel = logger.getLevel();
+        logger.setLevel(Level.OFF); // disable logging since errors are expected in this test case
+
         Importer importer = new Importer();
         List<Double> shippingCosts = importer.importShippingCosts(INVALID_FORMAT_FILE_PATH);
 
-        assertNotNull(shippingCosts, "The shipping costs list should not be null even if the file format is invalid");
-        assertTrue(shippingCosts.isEmpty(), "The shipping costs list should be empty if the file format is invalid");
+        assertNotNull(shippingCosts, "The shipping costs list should not be null");
+        assertTrue(shippingCosts.isEmpty(), "The shipping costs list should be empty");
+
+        logger.setLevel(originalLogLevel); // enable logging again
     }
 }
