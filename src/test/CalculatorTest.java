@@ -26,7 +26,7 @@ class CalculatorTest {
 
     static Stream<Map.Entry<Packet, Double>> createValidPackages() {
         Importer importer = new Importer();
-        List<Double> shippingCosts = importer.importShippingCosts("src/data/shippingCost.csv");
+        List<Double> shippingCosts = importer.importShippingCosts("src/data/shippingCosts.csv");
 
         Map<Packet, Double> packages = new HashMap<>();
         packages.put(new Packet(300, 300, 150, 1000), shippingCosts.get(0));

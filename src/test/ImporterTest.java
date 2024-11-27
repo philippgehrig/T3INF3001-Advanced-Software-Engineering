@@ -15,24 +15,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ImporterTest {
 
-    private static final String FILE_PATH = "src/test/shippingCosts.csv";
+    private static final String VALID_FILE_PATH = "src/data/shippingCost.csv";
+    private static final String INVALID_FORMAT_FILE_PATH = "src/data/invalidFormat.csv";
+    private static final String NONEXISTENT_FILE_PATH = "src/data/nonexistent.csv";
 
     @BeforeEach
     void setUp() throws IOException {
-        try (FileWriter writer = new FileWriter(FILE_PATH)) {
+        try (FileWriter writer = new FileWriter(VALID_FILE_PATH)) {
             writer.write("3.89;4.39;5.89;7.99;14.99");
+        }
+        try (FileWriter writer = new FileWriter(INVALID_FORMAT_FILE_PATH)) {
+            writer.write("invalid;data;format");
         }
     }
 
     @AfterEach
     void tearDown() throws IOException {
-        Files.deleteIfExists(Paths.get(FILE_PATH));
+        Files.deleteIfExists(Paths.get(VALID_FILE_PATH));
+        Files.deleteIfExists(Paths.get(INVALID_FORMAT_FILE_PATH));
+        Files.deleteIfExists(Paths.get(NONEXISTENT_FILE_PATH));
     }
 
     @Test
     void testImportShippingCosts() {
         Importer importer = new Importer();
-        List<Double> shippingCosts = importer.importShippingCosts(FILE_PATH);
+        List<Double> shippingCosts = importer.importShippingCosts(VALID_FILE_PATH);
 
         assertNotNull(shippingCosts, "The shipping costs list should not be null");
         assertEquals(5, shippingCosts.size(), "The shipping costs list should contain 5 elements");
@@ -47,7 +54,7 @@ class ImporterTest {
     @Test
     void testImportShippingCostsFileNotFound() {
         Importer importer = new Importer();
-        List<Double> shippingCosts = importer.importShippingCosts("src/data/nonexistent.csv");
+        List<Double> shippingCosts = importer.importShippingCosts(NONEXISTENT_FILE_PATH);
 
         assertNotNull(shippingCosts, "The shipping costs list should not be null even if the file is not found");
         assertTrue(shippingCosts.isEmpty(), "The shipping costs list should be empty if the file is not found");
@@ -56,7 +63,7 @@ class ImporterTest {
     @Test
     void testImportShippingCostsInvalidFormat() {
         Importer importer = new Importer();
-        List<Double> shippingCosts = importer.importShippingCosts("src/data/invalidFormat.csv");
+        List<Double> shippingCosts = importer.importShippingCosts(INVALID_FORMAT_FILE_PATH);
 
         assertNotNull(shippingCosts, "The shipping costs list should not be null even if the file format is invalid");
         assertTrue(shippingCosts.isEmpty(), "The shipping costs list should be empty if the file format is invalid");

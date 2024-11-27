@@ -15,7 +15,11 @@ public class Importer {
             while ((line = br.readLine()) != null) {
                 String[] costs = line.split(";");
                 for (String cost : costs) {
-                    shippingCosts.add(Double.parseDouble(cost));
+                    try {
+                        shippingCosts.add(Double.parseDouble(cost));
+                    } catch (NumberFormatException e) {
+                        System.err.println("Invalid format: " + cost);
+                    }
                 }
             }
         } catch (IOException e) {
