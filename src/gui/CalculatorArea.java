@@ -62,11 +62,13 @@ public class CalculatorArea extends GridPane {
 			int height = Integer.parseInt(heightTextField.getText());
 			int weight = Integer.parseInt(weightTextField.getText());
 
+			// initialize packet with user input values
+			Packet packet = new Packet(length, width, height, weight);
+
 			// validate user input
-			calc.checkInputs(length, width, height, weight);
+			packet.checkInputs(length, width, height, weight);
 
 			// perform calculation
-			Packet packet = new Packet(length, width, height, weight);
 			double costs = calc.calcShippingCosts(packet);
 
 			// show result
@@ -120,6 +122,6 @@ public class CalculatorArea extends GridPane {
 		this.add(calcButton, 3, 5);
 
 		// set action listeners
-		calcButton.setOnAction(ae -> handleCalculatorIO());
+		calcButton.setOnAction(event -> handleCalculatorIO());
 	}
 }

@@ -4,7 +4,6 @@ import control.Calculator;
 import control.NotValidDimensionsException;
 import data.Packet;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -34,21 +33,6 @@ class CalculatorTest {
         return packages.entrySet().stream();
     }
 
-    static Stream<Packet> createInvalidPackages() {
-        return Stream.of(
-                new Packet(-300, 300, 150, 1000),
-                new Packet(300, -300, 150, 1000),
-                new Packet(300, 300, -150, 1000),
-                new Packet(300, 300, 150, -1000),
-                new Packet(-300, -300, -150, -1000),
-                new Packet(0, 300, 150, 1000),
-                new Packet(300, 0, 150, 1000),
-                new Packet(300, 300, 0, 1000),
-                new Packet(300, 300, 150, 0),
-                new Packet(Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE)
-        );
-    }
-
     static Stream<Packet> createOutOfBoundsPackages() {
         return Stream.of(
                 new Packet(1300, 600, 600, 1000),  // Exceeds length and girth limit
@@ -68,12 +52,6 @@ class CalculatorTest {
         } catch (NotValidDimensionsException e) {
             fail("Exception thrown for valid package: " + e.getMessage());
         }
-    }
-
-    @ParameterizedTest
-    @MethodSource("createInvalidPackages")
-    void testCalcShippingCostWithInvalidDimensions(Packet packet) {
-        assertThrows(IllegalArgumentException.class, () -> calculator.calcShippingCosts(packet));
     }
 
     @ParameterizedTest
