@@ -96,10 +96,11 @@ public class CalculatorArea extends GridPane {
 		this.setVgap(10);
 
 		// Add CSS classes
-		lengthTextField.getStyleClass().add(INPUT_FIELD_CLASS);
-		widthTextField.getStyleClass().add(INPUT_FIELD_CLASS);
-		heightTextField.getStyleClass().add(INPUT_FIELD_CLASS);
-		weightTextField.getStyleClass().add(INPUT_FIELD_CLASS);
+		// add INPUT_FILED_CLASS to text fields
+		TextField[] textFields = {lengthTextField, widthTextField, heightTextField, weightTextField};
+		for (TextField textField : textFields) {
+			textField.getStyleClass().add(INPUT_FIELD_CLASS);
+		}
 		calcButton.getStyleClass().add(CALC_BUTTON_CLASS);
 		shippingCostLabel.getStyleClass().add(RESULT_LABEL_CLASS);
 
