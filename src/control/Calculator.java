@@ -1,8 +1,10 @@
 package control;
 
 import data.Importer;
+import data.PackageConfiguration;
 import data.Packet;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -18,7 +20,7 @@ public class Calculator {
 	 * @throws IllegalArgumentException if the shipping cost is invalid
 	 * @throws NotValidDimensionsException if the package is not in valid dimensions
 	 */
-	public double calcShippingCosts(Packet pack) throws NotValidDimensionsException, IllegalArgumentException{
+	public double calcShippingCosts(Packet pack) throws NotValidDimensionsException, IllegalArgumentException {
 
 		// Check if the dimensions and weight are valid
 		try {
@@ -27,25 +29,19 @@ public class Calculator {
 			throw new IllegalArgumentException("Dimensions and weight must be positive values.");
 		}
 
-		List<Double> shippingCosts = new Importer().importShippingCosts("src/data/shippingCosts.csv");
+		// Import and sort package configurations by price
+		List<PackageConfiguration> packageConfigurations = new Importer().importPackageConfigurations("src/data/shippingCosts.csv");
+		packageConfigurations.sort(Comparator.comparingDouble(PackageConfiguration::getPrice));
 
-		// Determine shipping costs based on sorted dimensions and weight
-		if (pack.getLength() <= 300 && pack.getWidth() <= 300 && pack.getHeight() <= 150 && pack.getWeight() <= 1000) {
-			return shippingCosts.getFirst();
-		} else if (pack.getLength() <= 600 && pack.getWidth() <= 300 && pack.getHeight() <= 150
-				&& pack.getWeight() <= 2000) {
-			return shippingCosts.get(1);
-		} else if (pack.getLength() <= 1200 && pack.getWidth() <= 600 && pack.getHeight() <= 600
-				&& pack.getGirth() <= 3000 && pack.getWeight() <= 5000) {
-			return shippingCosts.get(2);
-		} else if (pack.getLength() <= 1200 && pack.getWidth() <= 600 && pack.getHeight() <= 600
-				&& pack.getGirth() <= 3000 && pack.getWeight() <= 10000) {
-			return shippingCosts.get(3);
-		} else if (pack.getLength() <= 1200 && pack.getWidth() <= 600 && pack.getHeight() <= 600
-				&& pack.getWeight() <= 31000) {
-			return shippingCosts.get(4);
-		} else {
-			throw new NotValidDimensionsException("Package not in valid dimensions");
+		// Determine shipping costs based on sorted package configurations
+		for (PackageConfiguration config : packageConfigurations) {
+			if (pack.getLength() <= config.getLength() && pack.getWidth() <= config.getWidth() &&
+					pack.getHeight() <= config.getHeight() && pack.getWeight() <= config.getWeight() &&
+					pack.getGirth() <= config.getGirth()) {
+				return config.getPrice();
+			}
 		}
+
+		throw new NotValidDimensionsException("Package not in valid dimensions");
 	}
 }

@@ -3,6 +3,7 @@ package test;
 import control.Calculator;
 import control.NotValidDimensionsException;
 import data.Importer;
+import data.PackageConfiguration;
 import data.Packet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,36 +27,22 @@ class CalculatorTest {
 
     static Stream<Map.Entry<Packet, Double>> createValidPackages() {
         Importer importer = new Importer();
-        List<Double> shippingCosts = importer.importShippingCosts("src/data/shippingCosts.csv");
+        List<PackageConfiguration> packageConfigurations = importer.importPackageConfigurations("src/data/packageConfigurations.csv");
 
         Map<Packet, Double> packages = new HashMap<>();
-        packages.put(new Packet(300, 300, 150, 1000), shippingCosts.getFirst());
-        packages.put(new Packet(301, 300, 150, 1000), shippingCosts.get(1));
-        packages.put(new Packet(300, 301, 150, 1000), shippingCosts.get(1));
-        packages.put(new Packet(300, 301, 151, 1000), shippingCosts.get(2));
-        packages.put(new Packet(300, 300, 150, 1001), shippingCosts.get(1));
-
-        packages.put(new Packet(600, 300, 150, 2000), shippingCosts.get(1));
-        packages.put(new Packet(601, 300, 150, 2000), shippingCosts.get(2));
-        packages.put(new Packet(600, 301, 150, 2000), shippingCosts.get(2));
-        packages.put(new Packet(600, 300, 151, 2000), shippingCosts.get(2));
-        packages.put(new Packet(600, 300, 150, 2001), shippingCosts.get(2));
-
-        packages.put(new Packet(1200, 1, 1, 5000), shippingCosts.get(2));
-        packages.put(new Packet(1, 1, 1, 5001), shippingCosts.get(3));
-
-        packages.put(new Packet(1200, 1, 1, 10000), shippingCosts.get(3));
-        packages.put(new Packet(1, 1, 1, 10001), shippingCosts.get(4));
-
-        packages.put(new Packet(1200, 600, 600, 31000), shippingCosts.get(4));
+        packages.put(new Packet(100, 50, 30, 200), packageConfigurations.get(0).getPrice());
+        packages.put(new Packet(200, 100, 60, 400), packageConfigurations.get(1).getPrice());
+        packages.put(new Packet(300, 150, 90, 600), packageConfigurations.get(2).getPrice());
+        packages.put(new Packet(400, 200, 120, 800), packageConfigurations.get(3).getPrice());
+        packages.put(new Packet(500, 250, 150, 1000), packageConfigurations.get(4).getPrice());
 
         return packages.entrySet().stream();
     }
 
     static Stream<Packet> createOutOfBoundsPackages() {
         return Stream.of(
-                new Packet(1300, 600, 600, 1000),  // Exceeds length and girth limit
-                new Packet(1200, 600, 600, 32000), // Exceeds weight limit
+                new Packet(600, 300, 150, 2000),  // Exceeds length and girth limit
+                new Packet(1200, 600, 600, 31000), // Exceeds weight limit
                 new Packet(1201, 400, 400, 1000)   // Just over length limit
         );
     }

@@ -11,29 +11,36 @@ import java.util.logging.Logger;
 public class Importer {
     private static final Logger logger = Logger.getLogger(Importer.class.getName());
 
-    public List<Double> importShippingCosts(String filePath) {
-        List<Double> shippingCosts = new ArrayList<>();
+    public List<PackageConfiguration> importPackageConfigurations(String filePath) {
+        List<PackageConfiguration> packageConfigurations = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] costs = line.split(";");
-                for (String cost : costs) {
-                    addShippingCost(shippingCosts, cost);
+                String[] values = line.split(";");
+                if (values.length == 6) {
+                    try {
+                        int length = Integer.parseInt(values[0]);
+                        int height = Integer.parseInt(values[1]);
+                        int width = Integer.parseInt(values[2]);
+                        int weight = Integer.parseInt(values[3]);
+                        int girth = Integer.parseInt(values[4]);
+                        double price = Double.parseDouble(values[5]);
+
+                        PackageConfiguration config = new PackageConfiguration(length, height, width, weight, girth, price);
+                        packageConfigurations.add(config);
+                    } catch (NumberFormatException e) {
+                        String finalLine = line;
+                        logger.log(Level.WARNING, e, () -> "Invalid format in line: " + finalLine);
+                    }
+                } else {
+                    logger.log(Level.WARNING, "Invalid number of values in line: " + line);
                 }
             }
         } catch (IOException e) {
             logger.log(Level.SEVERE, e, () -> "Error reading file: " + filePath);
         }
 
-        return shippingCosts;
-    }
-
-    private void addShippingCost(List<Double> shippingCosts, String cost) {
-        try {
-            shippingCosts.add(Double.parseDouble(cost));
-        } catch (NumberFormatException e) {
-            logger.log(Level.WARNING, e, () -> "Invalid format: " + cost);
-        }
+        return packageConfigurations;
     }
 }

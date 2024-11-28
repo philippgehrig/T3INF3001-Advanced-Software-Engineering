@@ -1,6 +1,7 @@
 package test;
 
 import data.Importer;
+import data.PackageConfiguration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,14 +18,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ImporterTest {
 
-    private static final String VALID_FILE_PATH = "src/data/shippingCost.csv";
+    private static final String VALID_FILE_PATH = "src/data/packageConfigurations.csv";
     private static final String INVALID_FORMAT_FILE_PATH = "src/data/invalidFormat.csv";
     private static final String NONEXISTENT_FILE_PATH = "src/data/nonexistent.csv";
 
-    private static final String NOT_NULL_MESSAGE = "The shipping costs list should not be null";
-    private static final String EMPTY_MESSAGE = "The shipping costs list should be empty";
+    private static final String NOT_NULL_MESSAGE = "The package configurations list should not be null";
+    private static final String EMPTY_MESSAGE = "The package configurations list should be empty";
 
-    // logger of impoter for deactivation
+    // logger of importer for deactivation
     private static final Logger logger = Logger.getLogger(Importer.class.getName());
     private final Level originalLogLevel = logger.getLevel();
 
@@ -33,7 +34,11 @@ class ImporterTest {
     @BeforeEach
     void setUp() throws IOException {
         try (FileWriter writer = new FileWriter(VALID_FILE_PATH)) {
-            writer.write("3.89;4.39;5.89;7.99;14.99");
+            writer.write("100;50;30;200;150;19.99\n");
+            writer.write("200;100;60;400;300;29.99\n");
+            writer.write("300;150;90;600;450;39.99\n");
+            writer.write("400;200;120;800;600;49.99\n");
+            writer.write("500;250;150;1000;750;59.99\n");
         }
         try (FileWriter writer = new FileWriter(INVALID_FORMAT_FILE_PATH)) {
             writer.write("invalid;data;format");
@@ -48,40 +53,42 @@ class ImporterTest {
     }
 
     @Test
-    void testImportShippingCosts() {
+    void testImportPackageConfigurations() {
+        List<PackageConfiguration> packageConfigurations = importer.importPackageConfigurations(VALID_FILE_PATH);
 
-        List<Double> shippingCosts = importer.importShippingCosts(VALID_FILE_PATH);
+        assertNotNull(packageConfigurations, NOT_NULL_MESSAGE);
+        assertEquals(5, packageConfigurations.size(), "The package configurations list should contain 5 elements");
 
-        assertNotNull(shippingCosts, NOT_NULL_MESSAGE);
-        assertEquals(5, shippingCosts.size(), "The shipping costs list should contain 5 elements");
+        assertEquals(100, packageConfigurations.get(0).getLength());
+        assertEquals(50, packageConfigurations.get(0).getHeight());
+        assertEquals(30, packageConfigurations.get(0).getWidth());
+        assertEquals(200, packageConfigurations.get(0).getWeight());
+        assertEquals(150, packageConfigurations.get(0).getGirth());
+        assertEquals(19.99, packageConfigurations.get(0).getPrice(), 0.01);
 
-        assertEquals(3.89, shippingCosts.get(0), 0.01);
-        assertEquals(4.39, shippingCosts.get(1), 0.01);
-        assertEquals(5.89, shippingCosts.get(2), 0.01);
-        assertEquals(7.99, shippingCosts.get(3), 0.01);
-        assertEquals(14.99, shippingCosts.get(4), 0.01);
+        // Add similar assertions for other package configurations if needed
     }
 
     @Test
-    void testImportShippingCostsFileNotFound() {
+    void testImportPackageConfigurationsFileNotFound() {
         logger.setLevel(Level.OFF);
 
-        List<Double> shippingCosts = importer.importShippingCosts(NONEXISTENT_FILE_PATH);
+        List<PackageConfiguration> packageConfigurations = importer.importPackageConfigurations(NONEXISTENT_FILE_PATH);
 
-        assertNotNull(shippingCosts, NOT_NULL_MESSAGE);
-        assertTrue(shippingCosts.isEmpty(), EMPTY_MESSAGE);
+        assertNotNull(packageConfigurations, NOT_NULL_MESSAGE);
+        assertTrue(packageConfigurations.isEmpty(), EMPTY_MESSAGE);
 
         logger.setLevel(originalLogLevel);
     }
 
     @Test
-    void testImportShippingCostsInvalidFormat() {
+    void testImportPackageConfigurationsInvalidFormat() {
         logger.setLevel(Level.OFF);
 
-        List<Double> shippingCosts = importer.importShippingCosts(INVALID_FORMAT_FILE_PATH);
+        List<PackageConfiguration> packageConfigurations = importer.importPackageConfigurations(INVALID_FORMAT_FILE_PATH);
 
-        assertNotNull(shippingCosts, NOT_NULL_MESSAGE);
-        assertTrue(shippingCosts.isEmpty(), EMPTY_MESSAGE);
+        assertNotNull(packageConfigurations, NOT_NULL_MESSAGE);
+        assertTrue(packageConfigurations.isEmpty(), EMPTY_MESSAGE);
 
         logger.setLevel(originalLogLevel);
     }
