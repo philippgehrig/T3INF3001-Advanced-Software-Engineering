@@ -7,6 +7,10 @@ import javafx.scene.control.Alert;
  */
 public class Messages {
 
+    private Messages() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     /**
      * Creates and shows an alert with the specified message.
      * @param message the message to be displayed in the alert
