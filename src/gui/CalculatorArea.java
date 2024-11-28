@@ -35,6 +35,7 @@ public class CalculatorArea extends GridPane {
 	private static final String INPUT_FIELD_CLASS = "input-field";
 	private static final String CALC_BUTTON_CLASS = "calc-button";
 	private static final String RESULT_LABEL_CLASS = "result-label";
+	private static final String SHIPPING_COSTS_FILE_PATH = "src/data/shippingCosts.csv";
 
 	// initialise the text fields, labels, buttons
 	TextField lengthTextField = new TextField();
@@ -70,7 +71,7 @@ public class CalculatorArea extends GridPane {
 
 			Packet packet = new Packet(length, width, height, weight);
 
-			double costs = calc.calcShippingCosts(packet);
+			double costs = calc.calcShippingCosts(packet, SHIPPING_COSTS_FILE_PATH);
 			shippingCostLabel.setText(String.valueOf(costs));
 
 		} catch (IllegalArgumentException | NotValidDimensionsException e) {

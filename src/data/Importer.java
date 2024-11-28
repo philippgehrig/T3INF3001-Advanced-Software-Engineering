@@ -16,15 +16,20 @@ public class Importer {
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
+            boolean isFirstLine = true;
             while ((line = br.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue; // Skip the header line of the CSV file
+                }
                 String[] values = line.split(";");
-                if (values.length == 6) {
+                if (values.length >= 5) {
                     try {
                         int length = Integer.parseInt(values[0]);
                         int height = Integer.parseInt(values[1]);
                         int width = Integer.parseInt(values[2]);
                         int weight = Integer.parseInt(values[3]);
-                        int girth = Integer.parseInt(values[4]);
+                        int girth = values[4].isEmpty() ? 0 : Integer.parseInt(values[4]); // Handle empty girth
                         double price = Double.parseDouble(values[5]);
 
                         PackageConfiguration config = new PackageConfiguration(length, height, width, weight, girth, price);
