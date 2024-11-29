@@ -16,8 +16,8 @@ public class CalculatorArea extends GridPane {
 
 	private static final String MM = "mm";
 	private static final String CM = "cm";
-	private static final String M = "m";
-	private static final String G = "g";
+	private static final String M = "m ";
+	private static final String G = "g ";
 	private static final String KG = "kg";
 	private static final String LENGTH_LABEL = "Length: ";
 	private static final String WIDTH_LABEL = "Width:  ";

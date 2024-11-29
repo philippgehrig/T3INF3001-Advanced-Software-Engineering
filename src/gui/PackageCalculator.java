@@ -32,11 +32,9 @@ public class PackageCalculator extends Application {
 	}
 
 	// GUI areas
-	public ToolbarArea toolbarArea = new ToolbarArea();
-	public CalculatorArea editorArea = new CalculatorArea();
-
-	/** Root path to the currently open project. */
-	public String rootPath;
+	public static final ToolbarArea toolbarArea = new ToolbarArea();
+	public static final CalculatorArea calculatorArea = new CalculatorArea();
+	public static final DHBWArea dhbwArea = new DHBWArea();
 
 	/** The primary stage for the application. */
 	private Stage primaryStage;
@@ -66,11 +64,14 @@ public class PackageCalculator extends Application {
 		// tdSplitPane
 		SplitPane tdSplitPane = new SplitPane();
 		tdSplitPane.setOrientation(Orientation.VERTICAL);
-		tdSplitPane.getItems().add(editorArea);
-		tdSplitPane.setDividerPositions(0.9f);
+		tdSplitPane.getItems().addAll(dhbwArea, calculatorArea);
+		tdSplitPane.setDividerPositions(0.4f, 0.6f); // Adjusted divider position
+
+		// center the dhbw area
+		dhbwArea.setAlignment(Pos.CENTER);
 
 		// center the calculator area
-		editorArea.setAlignment(Pos.CENTER);
+		calculatorArea.setAlignment(Pos.TOP_CENTER);
 
 		// add all areas
 		BorderPane mainPane = new BorderPane();

@@ -1,8 +1,10 @@
 package gui;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ToolBar;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.Map;
@@ -35,7 +37,11 @@ public class ToolbarArea extends VBox {
 		ToolBar toolBar = new ToolBar();
 		toolBar.getItems().addAll(exitButton, aboutButton);
 
-		// add toolbar to VBox
-		this.getChildren().add(toolBar);
+		// create HBox to center toolbar items
+		HBox centeredBox = new HBox(toolBar);
+		centeredBox.setAlignment(Pos.CENTER);
+
+		// add centered HBox to VBox
+		this.getChildren().add(centeredBox);
 	}
 }
