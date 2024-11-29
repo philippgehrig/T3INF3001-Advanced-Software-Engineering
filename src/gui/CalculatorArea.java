@@ -7,6 +7,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
+import java.util.Objects;
+
 /**
  * The CalculatorArea class represents the main interface for calculating shipping costs.
  */
@@ -95,7 +97,7 @@ public class CalculatorArea extends GridPane {
 		this.add(infoButton, 4, 5);
 
 		// Add CSS stylesheet
-		this.getStylesheets().add(getClass().getResource(STYLESHEET_PATH).toExternalForm());
+		this.getStylesheets().add(Objects.requireNonNull(getClass().getResource(STYLESHEET_PATH)).toExternalForm());
 	}
 
 	private void setupEventHandlers() {

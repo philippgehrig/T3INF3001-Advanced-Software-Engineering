@@ -1,6 +1,10 @@
 package gui;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * The Messages class represents a utility for displaying messages in the application.
@@ -34,4 +38,21 @@ public class Messages {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    public static void createDialog(String title, String content, Map<ButtonType, Runnable> commands) {
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.getButtonTypes().setAll(commands.keySet());
+
+        Optional<ButtonType> result = alert.showAndWait();
+        result.ifPresent(buttonType -> {
+            Runnable command = commands.get(buttonType);
+            if (command != null) {
+                command.run();
+            }
+        });
+    }
+
 }

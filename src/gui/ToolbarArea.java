@@ -1,12 +1,11 @@
 package gui;
 
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+
+import java.util.Map;
 
 /**
  * The ToolbarArea class represents the toolbar in the application, providing buttons for various actions such as
@@ -14,37 +13,27 @@ import javafx.stage.Stage;
  */
 public class ToolbarArea extends VBox {
 
-	/**
-	 * Shows a help dialog with information about the application.
-	 */
-	private void showInfoDialog() {
-		Stage dialog = new Stage();
-		dialog.initModality(Modality.APPLICATION_MODAL);
-		VBox vbox = new VBox(20);
-		Text infoText = new Text("Package Calculator v0.3 \n (c) 2020 I. Bogicevic and P. Gehrig");
-		vbox.getChildren().add(infoText);
-		Scene dialogScene = new Scene(vbox, 400, 250);
-		dialog.setScene(dialogScene);
-		dialog.show();
-	}
+	private static final String INFO_MESSAGE = "Package Calculator v0.3 \n (c) 2020 I. Bogicevic and P. Gehrig";
+	private static final String EXIT_MESSAGE = "Do you really want to exit?";
+	private static final String EXIT_TITLE = "Exit";
 
 	/**
 	 * Constructs a new ToolbarArea and initializes the toolbar buttons and their action listeners.
 	 */
 	public ToolbarArea() {
-
-
 		// initialize other buttons
 
 		Button aboutButton = new Button("About");
-		Button settingsButton = new Button("Settings");
+		Button exitButton = new Button("Exit");
 
 		// action listeners
-		aboutButton.setOnAction(e -> showInfoDialog());
+		aboutButton.setOnAction(e -> Messages.createMessage(INFO_MESSAGE));
+		exitButton.setOnAction(e -> Messages.createDialog(EXIT_TITLE, EXIT_MESSAGE,
+				Map.of(ButtonType.YES, () -> System.exit(0), ButtonType.NO, () -> {})));
 
 		// create toolbar and add menu bar items
 		ToolBar toolBar = new ToolBar();
-		toolBar.getItems().addAll(settingsButton, aboutButton);
+		toolBar.getItems().addAll(exitButton, aboutButton);
 
 		// add toolbar to VBox
 		this.getChildren().add(toolBar);

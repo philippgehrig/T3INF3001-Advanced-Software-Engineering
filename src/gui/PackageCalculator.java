@@ -2,6 +2,7 @@ package gui;
 
 import javafx.application.Application;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
@@ -68,6 +69,9 @@ public class PackageCalculator extends Application {
 		tdSplitPane.getItems().add(editorArea);
 		tdSplitPane.setDividerPositions(0.9f);
 
+		// center the calculator area
+		editorArea.setAlignment(Pos.CENTER);
+
 		// add all areas
 		BorderPane mainPane = new BorderPane();
 		mainPane.setTop(toolbarArea);
@@ -79,7 +83,6 @@ public class PackageCalculator extends Application {
 		primaryStage.setTitle(APPNAME);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-
 	}
 
 	/**
