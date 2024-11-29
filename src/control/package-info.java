@@ -1,4 +1,5 @@
 /**
- * This package contains the classes that control the flow of the application.
+ * This Package contains the control classes. The control classes are responsible for the logic of the application.
+ * @see control.Calculator
  */
 package control;
