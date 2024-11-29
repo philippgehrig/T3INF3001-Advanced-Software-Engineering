@@ -21,6 +21,8 @@ public class ToolbarArea extends VBox {
 
 	/**
 	 * Constructs a new ToolbarArea and initializes the toolbar buttons and their action listeners.
+	 * Event listeners for each button calls dialog/info from Messages.java
+	 * @see Messages
 	 */
 	public ToolbarArea() {
 		// initialize other buttons
