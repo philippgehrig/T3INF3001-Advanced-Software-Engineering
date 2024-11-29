@@ -23,7 +23,7 @@ public class CalculatorArea extends GridPane {
 	private static final String WEIGHT_LABEL = "Weight: ";
 	private static final String SHIPPING_COSTS_LABEL = "Shipping Costs: ";
 	private static final String EMPTY_STRING = "";
-	private static final String STYLESHEET_PATH = "/gui/styles.css";
+	private static final String STYLESHEET_PATH = "../gui/styles.css";
 	private static final String INPUT_FIELD_CLASS = "input-field";
 	private static final String CALC_BUTTON_CLASS = "calc-button";
 	private static final String RESULT_LABEL_CLASS = "result-label";
