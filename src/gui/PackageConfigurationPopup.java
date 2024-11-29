@@ -15,6 +15,13 @@ import java.util.List;
 
 public class PackageConfigurationPopup {
 
+    private static final String LENGTH_LABEL = "Length [mm]";
+    private static final String WIDTH_LABEL = "Width [mm]";
+    private static final String HEIGHT_LABEL = "Height [mm]";
+    private static final String WEIGHT_LABEL = "Weight [g]";
+    private static final String GIRTH_LABEL = "Girth [mm]";
+    private static final String PRICE_LABEL = "Price [€]";
+
     private final Importer importer = new Importer();
 
     public void showInfoPopup(String filePath) {
@@ -27,22 +34,22 @@ public class PackageConfigurationPopup {
         TableView<PackageConfiguration> tableView = new TableView<>();
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        TableColumn<PackageConfiguration, Integer> lengthColumn = new TableColumn<>("Length [mm]");
+        TableColumn<PackageConfiguration, Integer> lengthColumn = new TableColumn<>(LENGTH_LABEL);
         lengthColumn.setCellValueFactory(new PropertyValueFactory<>("length"));
 
-        TableColumn<PackageConfiguration, Integer> widthColumn = new TableColumn<>("Width [mm]");
+        TableColumn<PackageConfiguration, Integer> widthColumn = new TableColumn<>(WIDTH_LABEL);
         widthColumn.setCellValueFactory(new PropertyValueFactory<>("width"));
 
-        TableColumn<PackageConfiguration, Integer> heightColumn = new TableColumn<>("Height [mm]");
+        TableColumn<PackageConfiguration, Integer> heightColumn = new TableColumn<>(HEIGHT_LABEL);
         heightColumn.setCellValueFactory(new PropertyValueFactory<>("height"));
 
-        TableColumn<PackageConfiguration, Integer> weightColumn = new TableColumn<>("Weight [g]");
+        TableColumn<PackageConfiguration, Integer> weightColumn = new TableColumn<>(WEIGHT_LABEL);
         weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
 
-        TableColumn<PackageConfiguration, Integer> girthColumn = new TableColumn<>("Girth [mm]");
+        TableColumn<PackageConfiguration, Integer> girthColumn = new TableColumn<>(GIRTH_LABEL);
         girthColumn.setCellValueFactory(new PropertyValueFactory<>("girth"));
 
-        TableColumn<PackageConfiguration, Double> priceColumn = new TableColumn<>("Price [€]");
+        TableColumn<PackageConfiguration, Double> priceColumn = new TableColumn<>(PRICE_LABEL);
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         tableView.getColumns().addAll
