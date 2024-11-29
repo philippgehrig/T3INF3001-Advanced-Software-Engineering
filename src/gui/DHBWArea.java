@@ -12,8 +12,11 @@ import javafx.scene.layout.VBox;
 public class DHBWArea extends VBox {
 
     private static final String DHBW_TEXT =
-            "\n \n \n student number: 5622763 \n name: Philipp Gehrig\n\n This project is for the Module Advanced Software Engineering ";
-    private static final String IMAGE_PATH = "/gui/resources/dhbw.png"; // Update with the actual path to your image
+            "\n \n student number: 5622763 " +
+                    "\n \n name: Philipp Gehrig" +
+                    "\n\n This project is for the Module Advanced Software Engineering ";
+
+    private static final String IMAGE_PATH = "src/gui/resources/dhbw.png";
 
     /**
      * Constructs a new DHBWArea and initializes its content.

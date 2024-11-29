@@ -1,0 +1,285 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CalculatorArea</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">gui</a>
+</div>
+
+<h1>Coverage Summary for Class: CalculatorArea (gui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CalculatorArea</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/68)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package gui;
+&nbsp;
+&nbsp;import control.Calculator;
+&nbsp;import control.NotValidDimensionsException;
+&nbsp;import data.Packet;
+&nbsp;import javafx.geometry.Insets;
+&nbsp;import javafx.scene.control.*;
+&nbsp;import javafx.scene.layout.GridPane;
+&nbsp;
+&nbsp;import java.util.Objects;
+&nbsp;
+&nbsp;/**
+&nbsp; * The CalculatorArea class represents the main interface for calculating shipping costs.
+&nbsp; */
+&nbsp;public class CalculatorArea extends GridPane {
+&nbsp;
+&nbsp;	// declarations of constants
+&nbsp;	private static final String MM = &quot;mm&quot;;
+&nbsp;	private static final String CM = &quot;cm&quot;;
+&nbsp;	private static final String M = &quot;m &quot;;
+&nbsp;	private static final String G = &quot;g &quot;;
+&nbsp;	private static final String KG = &quot;kg&quot;;
+&nbsp;	private static final String LENGTH_LABEL = &quot;Length: &quot;;
+&nbsp;	private static final String WIDTH_LABEL = &quot;Width:  &quot;;
+&nbsp;	private static final String HEIGHT_LABEL = &quot;Height: &quot;;
+&nbsp;	private static final String WEIGHT_LABEL = &quot;Weight: &quot;;
+&nbsp;	private static final String SHIPPING_COSTS_LABEL = &quot;Shipping Costs: &quot;;
+&nbsp;	private static final String EMPTY_STRING = &quot;&quot;;
+&nbsp;	private static final String STYLESHEET_PATH = &quot;../gui/styles.css&quot;;
+&nbsp;	private static final String INPUT_FIELD_CLASS = &quot;input-field&quot;;
+&nbsp;	private static final String CALC_BUTTON_CLASS = &quot;calc-button&quot;;
+&nbsp;	private static final String RESULT_LABEL_CLASS = &quot;result-label&quot;;
+&nbsp;	private static final String SHIPPING_COSTS_FILE_PATH = &quot;src/data/shippingCosts.csv&quot;;
+&nbsp;
+&nbsp;	// UI Components
+<b class="nc">&nbsp;	private final TextField lengthTextField = new TextField();</b>
+<b class="nc">&nbsp;	private final TextField widthTextField = new TextField();</b>
+<b class="nc">&nbsp;	private final TextField heightTextField = new TextField();</b>
+<b class="nc">&nbsp;	private final TextField weightTextField = new TextField();</b>
+<b class="nc">&nbsp;	private final Label shippingCostLabel = new Label(EMPTY_STRING);</b>
+<b class="nc">&nbsp;	private final Button calcButton = new Button(&quot;Calculate&quot;);</b>
+<b class="nc">&nbsp;	private final Button infoButton = new Button(&quot;i&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;	private final ComboBox&lt;String&gt; lengthUnitComboBox = new ComboBox&lt;&gt;();</b>
+<b class="nc">&nbsp;	private final ComboBox&lt;String&gt; widthUnitComboBox = new ComboBox&lt;&gt;();</b>
+<b class="nc">&nbsp;	private final ComboBox&lt;String&gt; heightUnitComboBox = new ComboBox&lt;&gt;();</b>
+<b class="nc">&nbsp;	private final ComboBox&lt;String&gt; weightUnitComboBox = new ComboBox&lt;&gt;();</b>
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Constructor for the CalculatorArea class.
+&nbsp;	 */
+<b class="nc">&nbsp;	public CalculatorArea() {</b>
+<b class="nc">&nbsp;		setupLayout();</b>
+<b class="nc">&nbsp;		setupEventHandlers();</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * This function sets up the layout of the CalculatorArea.
+&nbsp;	 */
+&nbsp;	private void setupLayout() {
+<b class="nc">&nbsp;		this.setPadding(new Insets(20, 20, 20, 20));</b>
+<b class="nc">&nbsp;		this.setHgap(10);</b>
+<b class="nc">&nbsp;		this.setVgap(10);</b>
+&nbsp;
+&nbsp;		// Add CSS classes
+<b class="nc">&nbsp;		TextField[] textFields = {lengthTextField, widthTextField, heightTextField, weightTextField};</b>
+<b class="nc">&nbsp;		for (TextField textField : textFields) {</b>
+<b class="nc">&nbsp;			textField.getStyleClass().add(INPUT_FIELD_CLASS);</b>
+&nbsp;		}
+<b class="nc">&nbsp;		calcButton.getStyleClass().add(CALC_BUTTON_CLASS);</b>
+<b class="nc">&nbsp;		shippingCostLabel.getStyleClass().add(RESULT_LABEL_CLASS);</b>
+&nbsp;
+&nbsp;		// Add unit options
+<b class="nc">&nbsp;		lengthUnitComboBox.getItems().addAll(MM, CM, M);</b>
+<b class="nc">&nbsp;		widthUnitComboBox.getItems().addAll(MM, CM, M);</b>
+<b class="nc">&nbsp;		heightUnitComboBox.getItems().addAll(MM, CM, M);</b>
+<b class="nc">&nbsp;		weightUnitComboBox.getItems().addAll(G, KG);</b>
+&nbsp;
+&nbsp;		// Set default values
+<b class="nc">&nbsp;		lengthUnitComboBox.setValue(MM);</b>
+<b class="nc">&nbsp;		widthUnitComboBox.setValue(MM);</b>
+<b class="nc">&nbsp;		heightUnitComboBox.setValue(MM);</b>
+<b class="nc">&nbsp;		weightUnitComboBox.setValue(G);</b>
+&nbsp;
+&nbsp;		// Labels with the dimensions and weight
+<b class="nc">&nbsp;		this.add(new Label(LENGTH_LABEL), 1, 1);</b>
+<b class="nc">&nbsp;		this.add(new Label(WIDTH_LABEL), 1, 2);</b>
+<b class="nc">&nbsp;		this.add(new Label(HEIGHT_LABEL), 1, 3);</b>
+<b class="nc">&nbsp;		this.add(new Label(WEIGHT_LABEL), 1, 4);</b>
+&nbsp;
+&nbsp;		// input fields for the dimensions and weight
+<b class="nc">&nbsp;		this.add(lengthTextField, 2, 1);</b>
+<b class="nc">&nbsp;		this.add(widthTextField, 2, 2);</b>
+<b class="nc">&nbsp;		this.add(heightTextField, 2, 3);</b>
+<b class="nc">&nbsp;		this.add(weightTextField, 2, 4);</b>
+&nbsp;
+&nbsp;		// dropdown menus for the units
+<b class="nc">&nbsp;		this.add(lengthUnitComboBox, 3, 1);</b>
+<b class="nc">&nbsp;		this.add(widthUnitComboBox, 3, 2);</b>
+<b class="nc">&nbsp;		this.add(heightUnitComboBox, 3, 3);</b>
+<b class="nc">&nbsp;		this.add(weightUnitComboBox, 3, 4);</b>
+&nbsp;
+&nbsp;		// shipping costs label + calculate shipping cost and info buttons
+<b class="nc">&nbsp;		this.add(new Label(SHIPPING_COSTS_LABEL), 1, 5);</b>
+<b class="nc">&nbsp;		this.add(shippingCostLabel, 2, 5);</b>
+<b class="nc">&nbsp;		this.add(calcButton, 3, 5);</b>
+<b class="nc">&nbsp;		this.add(infoButton, 4, 5);</b>
+&nbsp;
+&nbsp;		// Add CSS stylesheet
+<b class="nc">&nbsp;		this.getStylesheets().add(Objects.requireNonNull(getClass().getResource(STYLESHEET_PATH)).toExternalForm());</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * This function sets up the event handlers for the CalculatorArea.
+&nbsp;	 */
+&nbsp;	private void setupEventHandlers() {
+&nbsp;		// calculate the shipping cost once the button is clicked
+<b class="nc">&nbsp;		calcButton.setOnAction(event -&gt; handleCalculatorIO());</b>
+&nbsp;
+&nbsp;		// show the info popup with different package configurations when the info button is clicked
+<b class="nc">&nbsp;		infoButton.setOnAction(event -&gt; new PackageConfigurationPopup().showInfoPopup(SHIPPING_COSTS_FILE_PATH));</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * This function handles the input and output of the calculator.
+&nbsp;	 * It reads the input values from the textFields
+&nbsp;	 * converts them to the correct units and calculates the shipping costs.
+&nbsp;	 */
+&nbsp;	private void handleCalculatorIO() {
+<b class="nc">&nbsp;		Calculator calc = new Calculator();</b>
+&nbsp;
+&nbsp;		try {
+&nbsp;			// read the input values from the testFields
+<b class="nc">&nbsp;			int length = Integer.parseInt(lengthTextField.getText());</b>
+<b class="nc">&nbsp;			int width = Integer.parseInt(widthTextField.getText());</b>
+<b class="nc">&nbsp;			int height = Integer.parseInt(heightTextField.getText());</b>
+<b class="nc">&nbsp;			int weight = Integer.parseInt(weightTextField.getText());</b>
+&nbsp;
+&nbsp;			// Convert dimensions and weight
+<b class="nc">&nbsp;			length = convertToMillimeters(length, lengthUnitComboBox.getValue());</b>
+<b class="nc">&nbsp;			width = convertToMillimeters(width, widthUnitComboBox.getValue());</b>
+<b class="nc">&nbsp;			height = convertToMillimeters(height, heightUnitComboBox.getValue());</b>
+<b class="nc">&nbsp;			weight = convertToGrams(weight, weightUnitComboBox.getValue());</b>
+&nbsp;
+&nbsp;			// create a new Packet with the converted values
+<b class="nc">&nbsp;			Packet packet = new Packet(length, width, height, weight);</b>
+&nbsp;
+&nbsp;			// calculate the shipping costs and display them
+<b class="nc">&nbsp;			double costs = calc.calcShippingCosts(packet, SHIPPING_COSTS_FILE_PATH);</b>
+<b class="nc">&nbsp;			shippingCostLabel.setText(String.valueOf(costs));</b>
+&nbsp;
+<b class="nc">&nbsp;		} catch (IllegalArgumentException | NotValidDimensionsException e) {</b>
+&nbsp;			// create an Error message for an invalid input
+<b class="nc">&nbsp;			Messages.createErrorMessage(e.getMessage());</b>
+&nbsp;		}
+&nbsp;	}
+&nbsp;
+&nbsp;	private int convertToMillimeters(int value, String unit) {
+<b class="nc">&nbsp;		return switch (unit) {</b>
+<b class="nc">&nbsp;			case CM -&gt; value * 10;</b>
+<b class="nc">&nbsp;			case M -&gt; value * 1000;</b>
+<b class="nc">&nbsp;			default -&gt; value; // &quot;mm&quot;</b>
+&nbsp;		};
+&nbsp;	}
+&nbsp;
+&nbsp;	private int convertToGrams(int value, String unit) {
+<b class="nc">&nbsp;		return KG.equals(unit) ? value * 1000 : value; // &quot;g&quot;</b>
+&nbsp;	}
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-11-29 16:13</div>
+</div>
+</body>
+</html>

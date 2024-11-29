@@ -1,0 +1,324 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CalculatorTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">test</a>
+</div>
+
+<h1>Coverage Summary for Class: CalculatorTest (test)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CalculatorTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (2/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96,3%
+  </span>
+  <span class="absValue">
+    (103/107)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package test;
+&nbsp;
+&nbsp;import control.Calculator;
+&nbsp;import control.NotValidDimensionsException;
+&nbsp;import data.Importer;
+&nbsp;import data.PackageConfiguration;
+&nbsp;import data.Packet;
+&nbsp;import org.junit.jupiter.api.AfterAll;
+&nbsp;import org.junit.jupiter.api.BeforeAll;
+&nbsp;import org.junit.jupiter.api.BeforeEach;
+&nbsp;import org.junit.jupiter.params.ParameterizedTest;
+&nbsp;import org.junit.jupiter.params.provider.MethodSource;
+&nbsp;
+&nbsp;import java.io.FileWriter;
+&nbsp;import java.io.IOException;
+&nbsp;import java.nio.file.Files;
+&nbsp;import java.nio.file.Paths;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;import java.util.stream.Stream;
+&nbsp;
+&nbsp;import static org.junit.jupiter.api.Assertions.*;
+&nbsp;
+<b class="fc">&nbsp;class CalculatorTest {</b>
+&nbsp;
+&nbsp;    private Calculator calculator;
+&nbsp;    private static final String CSV_FILE_PATH_WITHOUT_GIRTH = &quot;src/test/testPackageConfigurations.csv&quot;;
+&nbsp;    private static final String CSV_FILE_PATH_WITH_GIRTH = &quot;src/test/testPackageConfigurationsWithGirth.csv&quot;;
+&nbsp;    private static final String UNEQUAL_ERROR_MESSAGE = &quot;The calculated price should match the expected price&quot;;
+&nbsp;
+&nbsp;    @BeforeAll
+&nbsp;    static void writeCsvFile() throws IOException {
+<b class="fc">&nbsp;        try (FileWriter writer = new FileWriter(CSV_FILE_PATH_WITHOUT_GIRTH)) {</b>
+<b class="fc">&nbsp;            writer.write(&quot;Length;Height;Width;Weight;Girth;Price\n&quot;);</b>
+<b class="fc">&nbsp;            writer.write(&quot;100;50;50;200;;19.99\n&quot;);</b>
+<b class="fc">&nbsp;            writer.write(&quot;200;100;100;400;;29.99\n&quot;);</b>
+<b class="fc">&nbsp;            writer.write(&quot;300;150;150;600;;39.99\n&quot;);</b>
+<b class="fc">&nbsp;            writer.write(&quot;400;200;200;800;;49.99\n&quot;);</b>
+<b class="fc">&nbsp;            writer.write(&quot;500;300;300;1000;;59.99\n&quot;);</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        try (FileWriter writer = new FileWriter(CSV_FILE_PATH_WITH_GIRTH)) {</b>
+<b class="fc">&nbsp;            writer.write(&quot;Length;Height;Width;Weight;Girth;Price\n&quot;);</b>
+<b class="fc">&nbsp;            writer.write(&quot;100;50;50;200;150;19.99\n&quot;);</b>
+<b class="fc">&nbsp;            writer.write(&quot;200;100;100;400;300;29.99\n&quot;);</b>
+<b class="fc">&nbsp;            writer.write(&quot;300;150;150;600;450;39.99\n&quot;);</b>
+<b class="fc">&nbsp;            writer.write(&quot;400;200;200;800;600;49.99\n&quot;);</b>
+<b class="fc">&nbsp;            writer.write(&quot;500;300;300;1000;750;59.99\n&quot;);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @BeforeEach
+&nbsp;    void setUp() {
+<b class="fc">&nbsp;        calculator = new Calculator();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @AfterAll
+&nbsp;    static void removeCsvFile() throws IOException {
+<b class="fc">&nbsp;        Files.deleteIfExists(Paths.get(CSV_FILE_PATH_WITHOUT_GIRTH));</b>
+<b class="fc">&nbsp;        Files.deleteIfExists(Paths.get(CSV_FILE_PATH_WITH_GIRTH));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    static Stream&lt;Map.Entry&lt;Packet, Double&gt;&gt; createValidPackagesWithoutGirth() {
+<b class="fc">&nbsp;        Importer importer = new Importer();</b>
+<b class="fc">&nbsp;        List&lt;PackageConfiguration&gt; packageConfigurations =</b>
+<b class="fc">&nbsp;                importer.importPackageConfigurations(CSV_FILE_PATH_WITHOUT_GIRTH);</b>
+&nbsp;
+<b class="fc">&nbsp;        Map&lt;Packet, Double&gt; packages = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="pc">&nbsp;        if (packageConfigurations.size() &gt;= 5) {</b>
+&nbsp;
+&nbsp;            // length test cases
+&nbsp;
+<b class="fc">&nbsp;            packages.put(new Packet(100, 1, 1, 200),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(0).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(200, 1, 1, 400),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(1).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(300, 1, 1, 600),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(2).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(400, 1, 1, 800),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(3).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(500, 1, 1, 1000),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(4).getPrice());</b>
+&nbsp;
+&nbsp;            // width test cases
+&nbsp;
+<b class="fc">&nbsp;            packages.put(new Packet(51, 50, 1, 200),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(0).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(101, 100, 1, 400),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(1).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(151, 150, 1, 600),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(2).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(201, 200, 1, 800),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(3).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(301, 300, 1, 1000),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(4).getPrice());</b>
+&nbsp;
+&nbsp;            // height % width test cases
+&nbsp;
+<b class="fc">&nbsp;            packages.put(new Packet(51, 50, 50, 200),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(0).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(101, 100, 100, 400),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(1).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(151, 150, 150, 600),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(2).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(201, 200, 200, 800),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(3).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(301, 300, 300, 1000),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(4).getPrice());</b>
+&nbsp;
+&nbsp;            // weight test cases
+&nbsp;
+<b class="fc">&nbsp;            packages.put(new Packet(1, 1, 1, 200),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(0).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(1, 1, 1, 400),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(1).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(1, 1, 1, 600),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(2).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(1, 1, 1, 800),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(3).getPrice());</b>
+<b class="fc">&nbsp;            packages.put(new Packet(1, 1, 1, 1000),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(4).getPrice());</b>
+&nbsp;
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return packages.entrySet().stream();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    static Stream&lt;Map.Entry&lt;Packet, Double&gt;&gt; createValidPackagesWithGirth(){
+&nbsp;
+<b class="fc">&nbsp;        Importer importer = new Importer();</b>
+<b class="fc">&nbsp;        List&lt;PackageConfiguration&gt; packageConfigurations =</b>
+<b class="fc">&nbsp;                importer.importPackageConfigurations(CSV_FILE_PATH_WITH_GIRTH);</b>
+&nbsp;
+<b class="fc">&nbsp;        Map&lt;Packet, Double&gt; packages = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="pc">&nbsp;        if (packageConfigurations.size() &gt;= 5) {</b>
+<b class="fc">&nbsp;            packages.put(new Packet(100, 1, 1, 200),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(0).getPrice()); // girth = 104</b>
+<b class="fc">&nbsp;            packages.put(new Packet(100, 13, 12, 200),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(0).getPrice()); // girth = 150</b>
+&nbsp;
+<b class="fc">&nbsp;            packages.put(new Packet(200, 1, 1, 400),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(1).getPrice()); // girth = 204</b>
+<b class="fc">&nbsp;            packages.put(new Packet(200, 25, 25, 400),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(1).getPrice()); // girth = 300</b>
+&nbsp;
+<b class="fc">&nbsp;            packages.put(new Packet(300, 1, 1, 600),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(2).getPrice()); // girth = 304</b>
+<b class="fc">&nbsp;            packages.put(new Packet(300, 37, 38, 600),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(2).getPrice()); // girth = 450</b>
+&nbsp;
+<b class="fc">&nbsp;            packages.put(new Packet(400, 1, 1, 800),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(3).getPrice()); // girth = 404</b>
+<b class="fc">&nbsp;            packages.put(new Packet(400, 50, 50, 800),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(3).getPrice()); // girth = 600</b>
+&nbsp;
+<b class="fc">&nbsp;            packages.put(new Packet(500, 1, 1, 1000),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(4).getPrice()); // girth = 504</b>
+<b class="fc">&nbsp;            packages.put(new Packet(500, 62, 63, 1000),</b>
+<b class="fc">&nbsp;                    packageConfigurations.get(4).getPrice()); // girth = 750</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return packages.entrySet().stream();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    static Stream&lt;Packet&gt; createOutOfBoundsPackages() {
+<b class="fc">&nbsp;        return Stream.of(</b>
+&nbsp;                new Packet(601, 1, 1, 1),  // Exceeds length limit
+&nbsp;                new Packet(500, 301, 300, 1), // Exceeds width limit
+&nbsp;                new Packet(500, 301, 301, 1),  // Exceeds width &amp; height limit
+&nbsp;                new Packet(1, 1, 1, 1001)    // Exceeds weight limit
+&nbsp;        );
+&nbsp;    }
+&nbsp;
+&nbsp;    @ParameterizedTest
+&nbsp;    @MethodSource(&quot;createValidPackagesWithoutGirth&quot;)
+&nbsp;    void testValidPackagesForPriceWithoutGirth(Map.Entry&lt;Packet, Double&gt; entry) {
+<b class="fc">&nbsp;        Packet packet = entry.getKey();</b>
+<b class="fc">&nbsp;        double expectedPrice = entry.getValue();</b>
+&nbsp;        try {
+<b class="fc">&nbsp;            double actualPrice = calculator.calcShippingCosts(packet, CSV_FILE_PATH_WITHOUT_GIRTH);</b>
+<b class="fc">&nbsp;            assertEquals(expectedPrice, actualPrice, 0.01, UNEQUAL_ERROR_MESSAGE);</b>
+<b class="nc">&nbsp;        } catch (NotValidDimensionsException e) {</b>
+<b class="nc">&nbsp;            fail(&quot;Exception thrown for valid package: &quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @ParameterizedTest
+&nbsp;    @MethodSource(&quot;createValidPackagesWithGirth&quot;)
+&nbsp;    void testValidPackagesForPriceWithGirth(Map.Entry&lt;Packet, Double&gt; entry) {
+<b class="fc">&nbsp;        Packet packet = entry.getKey();</b>
+<b class="fc">&nbsp;        double expectedPrice = entry.getValue();</b>
+&nbsp;        try {
+<b class="fc">&nbsp;            double actualPrice = calculator.calcShippingCosts(packet, CSV_FILE_PATH_WITH_GIRTH);</b>
+<b class="fc">&nbsp;            assertEquals(expectedPrice, actualPrice, 0.01, UNEQUAL_ERROR_MESSAGE);</b>
+<b class="nc">&nbsp;        } catch (NotValidDimensionsException e) {</b>
+<b class="nc">&nbsp;            fail(&quot;Exception thrown for valid package: &quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @ParameterizedTest
+&nbsp;    @MethodSource(&quot;createOutOfBoundsPackages&quot;)
+&nbsp;    void testCalcShippingCostWithOutOfBoundsPackages(Packet packet) {
+<b class="fc">&nbsp;        assertThrows(NotValidDimensionsException.class, () -&gt;</b>
+<b class="fc">&nbsp;                calculator.calcShippingCosts(packet, CSV_FILE_PATH_WITHOUT_GIRTH));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-11-29 16:13</div>
+</div>
+</body>
+</html>

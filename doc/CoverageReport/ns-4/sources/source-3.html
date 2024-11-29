@@ -1,0 +1,177 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > PackageConfigurationTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">test</a>
+</div>
+
+<h1>Coverage Summary for Class: PackageConfigurationTest (test)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PackageConfigurationTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (50/50)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package test;
+&nbsp;
+&nbsp;import data.PackageConfiguration;
+&nbsp;import org.junit.jupiter.api.Test;
+&nbsp;import static org.junit.jupiter.api.Assertions.*;
+&nbsp;
+<b class="fc">&nbsp;class PackageConfigurationTest {</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void testConstructorAndGetters() {
+<b class="fc">&nbsp;        int length = 100;</b>
+<b class="fc">&nbsp;        int width = 50;</b>
+<b class="fc">&nbsp;        int height = 30;</b>
+<b class="fc">&nbsp;        int weight = 200;</b>
+<b class="fc">&nbsp;        int girth = 150;</b>
+<b class="fc">&nbsp;        double price = 19.99;</b>
+&nbsp;
+<b class="fc">&nbsp;        PackageConfiguration config = new PackageConfiguration(length, width, height, weight, girth, price);</b>
+&nbsp;
+<b class="fc">&nbsp;        assertEquals(length, config.getLength());</b>
+<b class="fc">&nbsp;        assertEquals(width, config.getWidth());</b>
+<b class="fc">&nbsp;        assertEquals(height, config.getHeight());</b>
+<b class="fc">&nbsp;        assertEquals(weight, config.getWeight());</b>
+<b class="fc">&nbsp;        assertEquals(girth, config.getGirth());</b>
+<b class="fc">&nbsp;        assertEquals(price, config.getPrice(), 0.01);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void testSetters() {
+<b class="fc">&nbsp;        PackageConfiguration config =</b>
+&nbsp;                new PackageConfiguration(100, 50, 30, 200, 150, 19.99);
+&nbsp;
+<b class="fc">&nbsp;        config.setLength(200);</b>
+<b class="fc">&nbsp;        assertEquals(200, config.getLength());</b>
+<b class="fc">&nbsp;        assertEquals(50, config.getWidth());</b>
+<b class="fc">&nbsp;        assertEquals(30, config.getHeight());</b>
+<b class="fc">&nbsp;        assertEquals(200, config.getWeight());</b>
+<b class="fc">&nbsp;        assertEquals(360, config.getGirth());</b>
+<b class="fc">&nbsp;        assertEquals(19.99, config.getPrice(), 0.01);</b>
+&nbsp;
+<b class="fc">&nbsp;        config.setWidth(100);</b>
+<b class="fc">&nbsp;        assertEquals(200, config.getLength());</b>
+<b class="fc">&nbsp;        assertEquals(100, config.getWidth());</b>
+<b class="fc">&nbsp;        assertEquals(30, config.getHeight());</b>
+<b class="fc">&nbsp;        assertEquals(200, config.getWeight());</b>
+<b class="fc">&nbsp;        assertEquals(460, config.getGirth());</b>
+<b class="fc">&nbsp;        assertEquals(19.99, config.getPrice(), 0.01);</b>
+&nbsp;
+<b class="fc">&nbsp;        config.setHeight(60);</b>
+<b class="fc">&nbsp;        assertEquals(200, config.getLength());</b>
+<b class="fc">&nbsp;        assertEquals(100, config.getWidth());</b>
+<b class="fc">&nbsp;        assertEquals(60, config.getHeight());</b>
+<b class="fc">&nbsp;        assertEquals(200, config.getWeight());</b>
+<b class="fc">&nbsp;        assertEquals(520, config.getGirth());</b>
+<b class="fc">&nbsp;        assertEquals(19.99, config.getPrice(), 0.01);</b>
+&nbsp;
+<b class="fc">&nbsp;        config.setWeight(300);</b>
+<b class="fc">&nbsp;        assertEquals(200, config.getLength());</b>
+<b class="fc">&nbsp;        assertEquals(100, config.getWidth());</b>
+<b class="fc">&nbsp;        assertEquals(60, config.getHeight());</b>
+<b class="fc">&nbsp;        assertEquals(300, config.getWeight());</b>
+<b class="fc">&nbsp;        assertEquals(520, config.getGirth());</b>
+<b class="fc">&nbsp;        assertEquals(19.99, config.getPrice(), 0.01);</b>
+&nbsp;
+<b class="fc">&nbsp;        config.setPrice(1000);</b>
+<b class="fc">&nbsp;        assertEquals(200, config.getLength());</b>
+<b class="fc">&nbsp;        assertEquals(100, config.getWidth());</b>
+<b class="fc">&nbsp;        assertEquals(60, config.getHeight());</b>
+<b class="fc">&nbsp;        assertEquals(300, config.getWeight());</b>
+<b class="fc">&nbsp;        assertEquals(520, config.getGirth());</b>
+<b class="fc">&nbsp;        assertEquals(1000.0, config.getPrice(), 0.01);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-11-29 16:13</div>
+</div>
+</body>
+</html>
