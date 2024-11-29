@@ -24,28 +24,29 @@ public class Importer {
                 }
                 String[] values = line.split(";");
                 if (values.length >= 5) {
-                    try {
-                        int length = Integer.parseInt(values[0]);
-                        int height = Integer.parseInt(values[1]);
-                        int width = Integer.parseInt(values[2]);
-                        int weight = Integer.parseInt(values[3]);
-                        int girth = values[4].isEmpty() ? 0 : Integer.parseInt(values[4]); // Handle empty girth
-                        double price = Double.parseDouble(values[5]);
-
-                        PackageConfiguration config = new PackageConfiguration(length, height, width, weight, girth, price);
-                        packageConfigurations.add(config);
-                    } catch (NumberFormatException e) {
-                        String finalLine = line;
-                        logger.log(Level.WARNING, e, () -> "Invalid format in line: " + finalLine);
-                    }
+                    PackageConfiguration config = getPackageConfiguration(values);
+                    packageConfigurations.add(config);
                 } else {
-                    logger.log(Level.WARNING, "Invalid number of values in line: " + line);
+                    logger.log(Level.WARNING, "Invalid number of values in line: {0}", line);
                 }
             }
         } catch (IOException e) {
             logger.log(Level.SEVERE, e, () -> "Error reading file: " + filePath);
+        } catch (NumberFormatException e) {
+            logger.log(Level.WARNING, "Invalid format in line: {0}", e.getMessage());
         }
 
         return packageConfigurations;
+    }
+
+    private static PackageConfiguration getPackageConfiguration(String[] values) {
+        int length = Integer.parseInt(values[0]);
+        int height = Integer.parseInt(values[1]);
+        int width = Integer.parseInt(values[2]);
+        int weight = Integer.parseInt(values[3]);
+        int girth = values[4].isEmpty() ? 0 : Integer.parseInt(values[4]); // Handle empty girth
+        double price = Double.parseDouble(values[5]);
+
+        return new PackageConfiguration(length, width, height, weight, girth, price);
     }
 }
