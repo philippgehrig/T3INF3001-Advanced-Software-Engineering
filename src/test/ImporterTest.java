@@ -35,7 +35,7 @@ class ImporterTest {
     @BeforeAll
     static void setUp() throws IOException {
         try (FileWriter writer = new FileWriter(VALID_FILE_PATH_WITH_GIRTH)) {
-            writer.write("Length;Height;Width;Weight;Girth;Price\n");
+            writer.write("length;width;height;weight;girth;price\n");
             writer.write("100;50;30;200;150;19.99\n");
             writer.write("200;100;60;400;300;29.99\n");
             writer.write("300;150;90;600;450;39.99\n");
@@ -46,7 +46,7 @@ class ImporterTest {
             writer.write("invalid;data;format");
         }
         try (FileWriter writer = new FileWriter(VALID_FILE_PATH_WITHOUT_GIRTH)){
-            writer.write("Length;Height;Width;Weight;;Price\n");
+            writer.write("length;width;height;weight;;price\n");
             writer.write("100;50;30;200;;19.99\n");
             writer.write("200;100;60;400;;29.99\n");
             writer.write("300;150;90;600;;39.99\n");
@@ -54,7 +54,7 @@ class ImporterTest {
             writer.write("500;250;150;1000;;59.99\n");
         }
         try (FileWriter writer = new FileWriter(INVALID_NUMBER_FORMAT_FILE_PATH)){
-            writer.write("Length;Height;Width;Weight;Girth;Price\n");
+            writer.write("length;width;height;weight;girth;price\n");
             writer.write("100;50;30;200;150;19.99\n");
             writer.write("invalid;100;60;400;300;29.99\n"); // Invalid length
             writer.write("300;invalid;90;600;450;39.99\n"); // Invalid height
@@ -88,8 +88,8 @@ class ImporterTest {
         assertEquals(5, packageConfigurations.size(),
                 "The package configurations list should contain 5 elements");
         assertEquals(100, packageConfigurations.getFirst().getLength());
-        assertEquals(50, packageConfigurations.getFirst().getHeight());
-        assertEquals(30, packageConfigurations.getFirst().getWidth());
+        assertEquals(50, packageConfigurations.getFirst().getWidth());
+        assertEquals(30, packageConfigurations.getFirst().getHeight());
         assertEquals(200, packageConfigurations.getFirst().getWeight());
         assertEquals(150, packageConfigurations.getFirst().getGirth());
         assertEquals(19.99, packageConfigurations.getFirst().getPrice(), 0.01);

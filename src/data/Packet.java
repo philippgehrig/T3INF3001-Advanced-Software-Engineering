@@ -16,9 +16,12 @@ public class Packet {
      */
     public Packet(int length, int width, int height, int weight) {
         checkInputs(length, width, height, weight);
-        this.length = length;
-        this.width = width;
-        this.height = height;
+
+        int[] dimensions = {length, width, height};
+        java.util.Arrays.sort(dimensions);
+        this.length = dimensions[2];
+        this.width = dimensions[1];
+        this.height = dimensions[0];
         this.weight = weight;
         this.girth = calculateGirth(length, width, height); // girth is calculated
     }
@@ -40,6 +43,7 @@ public class Packet {
 
     /**
      * FUNCTION: Calculate Girth of Packet
+     * Since the package can be turned the parameters need to be orderd to achieve minimal girth
      * Girth is calculated by the formula: length + 2 * width + 2 * height
      * @param length length of the packet
      * @param width width of the packet
@@ -47,6 +51,11 @@ public class Packet {
      * @return girth of the packet
      */
     private int calculateGirth(int length, int width, int height) {
+        int[] dimensions = {length, width, height};
+        java.util.Arrays.sort(dimensions);
+        length = dimensions[2];
+        width = dimensions[1];
+        height = dimensions[0];
         return length + 2 * width + 2 * height;
     }
 

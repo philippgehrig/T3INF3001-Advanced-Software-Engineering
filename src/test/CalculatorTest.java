@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -172,6 +173,81 @@ class CalculatorTest {
         );
     }
 
+    static Stream<Map.Entry<Packet, Double>> createRandomPackages() {
+        Map<Packet, Double> packages = new HashMap<>();
+
+        int counter = 0;
+        while(counter < 1000) {
+            int length = (int) (Math.random() * 600) + 1;
+            int width = (int) (Math.random() * 300) + 1;
+            int height = (int) (Math.random() * 300) + 1;
+            int weight = (int) (Math.random() * 1000) + 1;
+            Packet packet = new Packet(length, width, height, weight);
+
+            try {
+                double price = new CalculatorTest().calcShippingCosts(packet);
+                packages.put(packet, price);
+                counter += 1;
+            } catch (NotValidDimensionsException | IllegalArgumentException e) {
+                // Ignore invalid packages
+            }
+        }
+
+        return packages.entrySet().stream();
+    }
+
+    public double calcShippingCosts(Packet pack) throws NotValidDimensionsException, IllegalArgumentException {
+        // Validate inputs
+        checkInputs(pack.getLength(), pack.getWidth(), pack.getHeight(), pack.getWeight());
+
+        double shippingCosts;
+
+        // Sort dimensions in descending order
+        int[] dimensions = {pack.getLength(), pack.getWidth(), pack.getHeight()};
+        Arrays.sort(dimensions);
+        int length = dimensions[2];
+        int width = dimensions[1];
+        int height = dimensions[0];
+
+        // Calculate the girth
+        int girth = length + 2 * width + 2 * height;
+
+        // Determine shipping costs based on sorted dimensions and weight
+        if (length <= 100 && width <= 50 && height <= 50 && pack.getWeight() <= 200 && girth <= 150) {
+            shippingCosts = 19.99;
+        } else if (length <= 200 && width <= 100 && height <= 100 && pack.getWeight() <= 400 && girth <= 300) {
+            shippingCosts = 29.99;
+        } else if (length <= 300 && width <= 150 && height <= 150 && pack.getWeight() <= 600 && girth <= 450) {
+            shippingCosts = 39.99;
+        } else if (length <= 400 && width <= 200 && height <= 200 && pack.getWeight() <= 800 && girth <= 600) {
+            shippingCosts = 49.99;
+        } else if (length <= 500 && width <= 300 && height <= 300 && pack.getWeight() <= 1000 && girth <= 750) {
+            shippingCosts = 59.99;
+        } else {
+            throw new NotValidDimensionsException("Package not in valid dimensions");
+        }
+
+        return shippingCosts;
+    }
+
+    public void checkInputs(int length, int width, int height, int weight)
+            throws NotValidDimensionsException, IllegalArgumentException {
+        if (length <= 0 || width <= 0 || height <= 0 || weight <= 0) {
+            throw new IllegalArgumentException("Dimensions and weight must be positive values.");
+        }
+
+        int[] dimensions = {length, width, height};
+        Arrays.sort(dimensions);
+
+        length = dimensions[2];
+        width = dimensions[1];
+        height = dimensions[0];
+
+        if (length > 500 || width > 300 || height > 300 || weight > 1000) {
+            throw new NotValidDimensionsException("Package not in valid dimensions");
+        }
+    }
+
     @ParameterizedTest
     @MethodSource("createValidPackagesWithoutGirth")
     void testValidPackagesForPriceWithoutGirth(Map.Entry<Packet, Double> entry) {
@@ -205,4 +281,16 @@ class CalculatorTest {
                 calculator.calcShippingCosts(packet, CSV_FILE_PATH_WITHOUT_GIRTH));
     }
 
+    @ParameterizedTest
+    @MethodSource("createRandomPackages")
+    void testRandomPackages(Map.Entry<Packet, Double> entry) {
+        Packet packet = entry.getKey();
+        double expectedPrice = entry.getValue();
+        try {
+            double actualPrice = calculator.calcShippingCosts(packet, CSV_FILE_PATH_WITH_GIRTH);
+            assertEquals(expectedPrice, actualPrice, 0.01, UNEQUAL_ERROR_MESSAGE);
+        } catch (NotValidDimensionsException e) {
+            fail("Exception thrown for valid package: " + e.getMessage());
+        }
+    }
 }

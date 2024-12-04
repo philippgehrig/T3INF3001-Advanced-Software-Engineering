@@ -22,6 +22,7 @@ public class PackageCalculator extends Application {
 	public static final ToolbarArea toolbarArea = new ToolbarArea();
 	public static final CalculatorArea calculatorArea = new CalculatorArea();
 	public static final DHBWArea dhbwArea = new DHBWArea();
+	public static final PackageModelArea packageModelArea = new PackageModelArea();
 
 	/**
 	 * Starts the application and sets up the main GUI.
@@ -32,15 +33,18 @@ public class PackageCalculator extends Application {
 
 		// tdSplitPane
 		SplitPane tdSplitPane = new SplitPane();
-		tdSplitPane.setOrientation(Orientation.VERTICAL);
-		tdSplitPane.getItems().addAll(dhbwArea, calculatorArea);
-		tdSplitPane.setDividerPositions(0.4f, 0.6f); // Adjusted divider position
+		tdSplitPane.setOrientation(Orientation.HORIZONTAL);
+		tdSplitPane.getItems().addAll(dhbwArea, calculatorArea, packageModelArea);
+		tdSplitPane.setDividerPositions(0.3f, 0.7f);
 
 		// center the DHBW area
 		dhbwArea.setAlignment(Pos.CENTER);
 
 		// center the calculator area
-		calculatorArea.setAlignment(Pos.TOP_CENTER);
+		calculatorArea.setAlignment(Pos.CENTER);
+
+		// center the package model area
+		packageModelArea.setAlignment(Pos.CENTER);
 
 		// add all areas
 		BorderPane mainPane = new BorderPane();

@@ -149,6 +149,9 @@ public class CalculatorArea extends GridPane {
 			double costs = calc.calcShippingCosts(packet, SHIPPING_COSTS_FILE_PATH);
 			shippingCostLabel.setText(String.valueOf(costs));
 
+			// update the 3D model
+			PackageCalculator.packageModelArea.handleUpdate(packet.getLength(), packet.getWidth(), packet.getHeight());
+
 		} catch (IllegalArgumentException | NotValidDimensionsException e) {
 			// create an Error message for an invalid input
 			Messages.createErrorMessage(e.getMessage());

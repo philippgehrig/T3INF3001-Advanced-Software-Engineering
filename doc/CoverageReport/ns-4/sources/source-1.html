@@ -59,23 +59,23 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (11/11)
+    (15/15)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    50%
+    76,4%
   </span>
   <span class="absValue">
-    (2/4)
+    (55/72)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    96,3%
+    95,5%
   </span>
   <span class="absValue">
-    (103/107)
+    (147/154)
   </span>
 </td>
 </tr>
@@ -104,6 +104,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import java.io.IOException;
 &nbsp;import java.nio.file.Files;
 &nbsp;import java.nio.file.Paths;
+&nbsp;import java.util.Arrays;
 &nbsp;import java.util.HashMap;
 &nbsp;import java.util.List;
 &nbsp;import java.util.Map;
@@ -261,6 +262,81 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;        );
 &nbsp;    }
 &nbsp;
+&nbsp;    static Stream&lt;Map.Entry&lt;Packet, Double&gt;&gt; createRandomPackages() {
+<b class="fc">&nbsp;        Map&lt;Packet, Double&gt; packages = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        int counter = 0;</b>
+<b class="fc">&nbsp;        while(counter &lt; 1000) {</b>
+<b class="fc">&nbsp;            int length = (int) (Math.random() * 600) + 1;</b>
+<b class="fc">&nbsp;            int width = (int) (Math.random() * 300) + 1;</b>
+<b class="fc">&nbsp;            int height = (int) (Math.random() * 300) + 1;</b>
+<b class="fc">&nbsp;            int weight = (int) (Math.random() * 1000) + 1;</b>
+<b class="fc">&nbsp;            Packet packet = new Packet(length, width, height, weight);</b>
+&nbsp;
+&nbsp;            try {
+<b class="fc">&nbsp;                double price = new CalculatorTest().calcShippingCosts(packet);</b>
+<b class="fc">&nbsp;                packages.put(packet, price);</b>
+<b class="fc">&nbsp;                counter += 1;</b>
+<b class="fc">&nbsp;            } catch (NotValidDimensionsException | IllegalArgumentException e) {</b>
+&nbsp;                // Ignore invalid packages
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return packages.entrySet().stream();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double calcShippingCosts(Packet pack) throws NotValidDimensionsException, IllegalArgumentException {
+&nbsp;        // Validate inputs
+<b class="fc">&nbsp;        checkInputs(pack.getLength(), pack.getWidth(), pack.getHeight(), pack.getWeight());</b>
+&nbsp;
+&nbsp;        double shippingCosts;
+&nbsp;
+&nbsp;        // Sort dimensions in descending order
+<b class="fc">&nbsp;        int[] dimensions = {pack.getLength(), pack.getWidth(), pack.getHeight()};</b>
+<b class="fc">&nbsp;        Arrays.sort(dimensions);</b>
+<b class="fc">&nbsp;        int length = dimensions[2];</b>
+<b class="fc">&nbsp;        int width = dimensions[1];</b>
+<b class="fc">&nbsp;        int height = dimensions[0];</b>
+&nbsp;
+&nbsp;        // Calculate the girth
+<b class="fc">&nbsp;        int girth = length + 2 * width + 2 * height;</b>
+&nbsp;
+&nbsp;        // Determine shipping costs based on sorted dimensions and weight
+<b class="pc">&nbsp;        if (length &lt;= 100 &amp;&amp; width &lt;= 50 &amp;&amp; height &lt;= 50 &amp;&amp; pack.getWeight() &lt;= 200 &amp;&amp; girth &lt;= 150) {</b>
+<b class="fc">&nbsp;            shippingCosts = 19.99;</b>
+<b class="pc">&nbsp;        } else if (length &lt;= 200 &amp;&amp; width &lt;= 100 &amp;&amp; height &lt;= 100 &amp;&amp; pack.getWeight() &lt;= 400 &amp;&amp; girth &lt;= 300) {</b>
+<b class="fc">&nbsp;            shippingCosts = 29.99;</b>
+<b class="pc">&nbsp;        } else if (length &lt;= 300 &amp;&amp; width &lt;= 150 &amp;&amp; height &lt;= 150 &amp;&amp; pack.getWeight() &lt;= 600 &amp;&amp; girth &lt;= 450) {</b>
+<b class="fc">&nbsp;            shippingCosts = 39.99;</b>
+<b class="pc">&nbsp;        } else if (length &lt;= 400 &amp;&amp; width &lt;= 200 &amp;&amp; height &lt;= 200 &amp;&amp; pack.getWeight() &lt;= 800 &amp;&amp; girth &lt;= 600) {</b>
+<b class="fc">&nbsp;            shippingCosts = 49.99;</b>
+<b class="pc">&nbsp;        } else if (length &lt;= 500 &amp;&amp; width &lt;= 300 &amp;&amp; height &lt;= 300 &amp;&amp; pack.getWeight() &lt;= 1000 &amp;&amp; girth &lt;= 750) {</b>
+<b class="fc">&nbsp;            shippingCosts = 59.99;</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            throw new NotValidDimensionsException(&quot;Package not in valid dimensions&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return shippingCosts;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void checkInputs(int length, int width, int height, int weight)
+&nbsp;            throws NotValidDimensionsException, IllegalArgumentException {
+<b class="pc">&nbsp;        if (length &lt;= 0 || width &lt;= 0 || height &lt;= 0 || weight &lt;= 0) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Dimensions and weight must be positive values.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        int[] dimensions = {length, width, height};</b>
+<b class="fc">&nbsp;        Arrays.sort(dimensions);</b>
+&nbsp;
+<b class="fc">&nbsp;        length = dimensions[2];</b>
+<b class="fc">&nbsp;        width = dimensions[1];</b>
+<b class="fc">&nbsp;        height = dimensions[0];</b>
+&nbsp;
+<b class="pc">&nbsp;        if (length &gt; 500 || width &gt; 300 || height &gt; 300 || weight &gt; 1000) {</b>
+<b class="fc">&nbsp;            throw new NotValidDimensionsException(&quot;Package not in valid dimensions&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
 &nbsp;    @ParameterizedTest
 &nbsp;    @MethodSource(&quot;createValidPackagesWithoutGirth&quot;)
 &nbsp;    void testValidPackagesForPriceWithoutGirth(Map.Entry&lt;Packet, Double&gt; entry) {
@@ -294,6 +370,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;                calculator.calcShippingCosts(packet, CSV_FILE_PATH_WITHOUT_GIRTH));</b>
 &nbsp;    }
 &nbsp;
+&nbsp;    @ParameterizedTest
+&nbsp;    @MethodSource(&quot;createRandomPackages&quot;)
+&nbsp;    void testRandomPackages(Map.Entry&lt;Packet, Double&gt; entry) {
+<b class="fc">&nbsp;        Packet packet = entry.getKey();</b>
+<b class="fc">&nbsp;        double expectedPrice = entry.getValue();</b>
+&nbsp;        try {
+<b class="fc">&nbsp;            double actualPrice = calculator.calcShippingCosts(packet, CSV_FILE_PATH_WITH_GIRTH);</b>
+<b class="fc">&nbsp;            assertEquals(expectedPrice, actualPrice, 0.01, UNEQUAL_ERROR_MESSAGE);</b>
+<b class="nc">&nbsp;        } catch (NotValidDimensionsException e) {</b>
+<b class="nc">&nbsp;            fail(&quot;Exception thrown for valid package: &quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
 &nbsp;}
 </code>
 </pre>
@@ -318,7 +406,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-11-29 16:13</div>
+    <div style="float:right;">generated on 2024-12-04 11:50</div>
 </div>
 </body>
 </html>

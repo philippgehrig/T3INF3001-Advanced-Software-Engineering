@@ -16,7 +16,7 @@ public class DHBWArea extends VBox {
                     "\n \n name: Philipp Gehrig" +
                     "\n\n This project is for the Module Advanced Software Engineering ";
 
-    private static final String IMAGE_PATH = "src/gui/resources/dhbw.png";
+    private static final String IMAGE_PATH = "/gui/resources/dhbw.png";
 
     /**
      * Constructs a new DHBWArea and initializes its content.

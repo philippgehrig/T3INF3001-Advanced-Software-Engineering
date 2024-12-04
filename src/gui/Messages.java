@@ -23,7 +23,7 @@ public class Messages {
      * @param message the message to be displayed in the alert
      */
     public static void createMessage(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION); // set Alert type to be information meesage
+        Alert alert = new Alert(Alert.AlertType.INFORMATION); // set Alert type to be information message
         alert.setTitle("Information");
         alert.setHeaderText(null);
         alert.setContentText(message);

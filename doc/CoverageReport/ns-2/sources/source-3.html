@@ -75,7 +75,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (26/26)
+    (33/33)
   </span>
 </td>
 </tr>
@@ -105,9 +105,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     */
 <b class="fc">&nbsp;    public Packet(int length, int width, int height, int weight) {</b>
 <b class="fc">&nbsp;        checkInputs(length, width, height, weight);</b>
-<b class="fc">&nbsp;        this.length = length;</b>
-<b class="fc">&nbsp;        this.width = width;</b>
-<b class="fc">&nbsp;        this.height = height;</b>
+&nbsp;
+<b class="fc">&nbsp;        int[] dimensions = {length, width, height};</b>
+<b class="fc">&nbsp;        java.util.Arrays.sort(dimensions);</b>
+<b class="fc">&nbsp;        this.length = dimensions[2];</b>
+<b class="fc">&nbsp;        this.width = dimensions[1];</b>
+<b class="fc">&nbsp;        this.height = dimensions[0];</b>
 <b class="fc">&nbsp;        this.weight = weight;</b>
 <b class="fc">&nbsp;        this.girth = calculateGirth(length, width, height); // girth is calculated</b>
 &nbsp;    }
@@ -129,6 +132,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * FUNCTION: Calculate Girth of Packet
+&nbsp;     * Since the package can be turned the parameters need to be orderd to achieve minimal girth
 &nbsp;     * Girth is calculated by the formula: length + 2 * width + 2 * height
 &nbsp;     * @param length length of the packet
 &nbsp;     * @param width width of the packet
@@ -136,6 +140,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     * @return girth of the packet
 &nbsp;     */
 &nbsp;    private int calculateGirth(int length, int width, int height) {
+<b class="fc">&nbsp;        int[] dimensions = {length, width, height};</b>
+<b class="fc">&nbsp;        java.util.Arrays.sort(dimensions);</b>
+<b class="fc">&nbsp;        length = dimensions[2];</b>
+<b class="fc">&nbsp;        width = dimensions[1];</b>
+<b class="fc">&nbsp;        height = dimensions[0];</b>
 <b class="fc">&nbsp;        return length + 2 * width + 2 * height;</b>
 &nbsp;    }
 &nbsp;
@@ -243,7 +252,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-11-29 16:13</div>
+    <div style="float:right;">generated on 2024-12-04 11:50</div>
 </div>
 </body>
 </html>

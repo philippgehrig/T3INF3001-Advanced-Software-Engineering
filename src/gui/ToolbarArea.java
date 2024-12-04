@@ -39,11 +39,6 @@ public class ToolbarArea extends VBox {
 		ToolBar toolBar = new ToolBar();
 		toolBar.getItems().addAll(exitButton, aboutButton);
 
-		// create HBox to center toolbar items
-		HBox centeredBox = new HBox(toolBar);
-		centeredBox.setAlignment(Pos.CENTER);
-
-		// add centered HBox to VBox
-		this.getChildren().add(centeredBox);
+		this.getChildren().add(toolBar);
 	}
 }
