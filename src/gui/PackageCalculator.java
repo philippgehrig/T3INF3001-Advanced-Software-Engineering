@@ -42,6 +42,8 @@ public class PackageCalculator extends Application {
 
 		// center the calculator area
 		calculatorArea.setAlignment(Pos.CENTER);
+		calculatorArea.setMinWidth(500); // minimum width
+		calculatorArea.setMinHeight(400); // minimum height
 
 		// center the package model area
 		packageModelArea.setAlignment(Pos.CENTER);

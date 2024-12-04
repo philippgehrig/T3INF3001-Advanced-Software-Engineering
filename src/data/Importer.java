@@ -57,6 +57,7 @@ public class Importer {
 
     /**
      * This private function creates a Package Configuration from a String array
+     * if no girth is within the csv file, girth is set to 0
      * @param values Array of Strings which are read from the csv file
      * @return PackageConfiguration object with the values from the csv file
      */
@@ -65,7 +66,7 @@ public class Importer {
         int height = Integer.parseInt(values[1]);
         int width = Integer.parseInt(values[2]);
         int weight = Integer.parseInt(values[3]);
-        int girth = values[4].isEmpty() ? 0 : Integer.parseInt(values[4]); // Handle empty girth
+        int girth = values[4].isEmpty() ? 0 : Integer.parseInt(values[4]); // Handle empty girth => if empty girth = 0
         double price = Double.parseDouble(values[5]);
 
         return new PackageConfiguration(length, width, height, weight, girth, price);

@@ -18,8 +18,8 @@ public class PackageModel {
 
     private final Group group;
     private final Box cube;
-    private final Rotate rotateX = new Rotate(0, Rotate.X_AXIS);
-    private final Rotate rotateY = new Rotate(0, Rotate.Y_AXIS);
+    private final Rotate rotateX = new Rotate(30, Rotate.X_AXIS); // initial rotation on x axis by 30 deg
+    private final Rotate rotateY = new Rotate(45, Rotate.Y_AXIS); // initial rotation on y axis by 45 deg
 
     /**
      * Constructor for the PackageModel class.
@@ -29,7 +29,7 @@ public class PackageModel {
         group = new Group();
 
         // Create the cube
-        cube = new Box(0, 0, 0); // Initial dimensions
+        cube = new Box(50, 50, 50); // Initial dimensions
         group.getChildren().add(cube);
 
         // Apply rotations to the group

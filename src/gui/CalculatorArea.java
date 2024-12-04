@@ -40,7 +40,7 @@ public class CalculatorArea extends GridPane {
 	private final TextField weightTextField = new TextField();
 	private final Label shippingCostLabel = new Label(EMPTY_STRING);
 	private final Button calcButton = new Button("Calculate");
-	private final Button infoButton = new Button("i");
+	private final Button infoButton = new Button("?");
 
 	private final ComboBox<String> lengthUnitComboBox = new ComboBox<>();
 	private final ComboBox<String> widthUnitComboBox = new ComboBox<>();
