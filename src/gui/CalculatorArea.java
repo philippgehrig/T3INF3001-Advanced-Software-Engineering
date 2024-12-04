@@ -20,6 +20,7 @@ public class CalculatorArea extends GridPane {
 	private static final String M = "m ";
 	private static final String G = "g ";
 	private static final String KG = "kg";
+	private static final String CURRENCY = "€";
 	private static final String LENGTH_LABEL = "Length: ";
 	private static final String WIDTH_LABEL = "Width:  ";
 	private static final String HEIGHT_LABEL = "Height: ";
@@ -131,33 +132,48 @@ public class CalculatorArea extends GridPane {
 
 		try {
 			// read the input values from the testFields
-			int length = Integer.parseInt(lengthTextField.getText());
-			int width = Integer.parseInt(widthTextField.getText());
-			int height = Integer.parseInt(heightTextField.getText());
-			int weight = Integer.parseInt(weightTextField.getText());
-
-			// Convert dimensions and weight
-			length = convertToMillimeters(length, lengthUnitComboBox.getValue());
-			width = convertToMillimeters(width, widthUnitComboBox.getValue());
-			height = convertToMillimeters(height, heightUnitComboBox.getValue());
-			weight = convertToGrams(weight, weightUnitComboBox.getValue());
-
-			// create a new Packet with the converted values
-			Packet packet = new Packet(length, width, height, weight);
+			Packet packet = readPacket();
 
 			// calculate the shipping costs and display them
 			double costs = calc.calcShippingCosts(packet, SHIPPING_COSTS_FILE_PATH);
-			shippingCostLabel.setText(String.valueOf(costs));
+			shippingCostLabel.setText(String.valueOf(costs) + CURRENCY);
 
 			// update the 3D model
 			PackageCalculator.packageModelArea.handleUpdate(packet.getLength(), packet.getWidth(), packet.getHeight());
 
 		} catch (IllegalArgumentException | NotValidDimensionsException e) {
 			// create an Error message for an invalid input
+			PackageCalculator.packageModelArea.handleUpdate(0,0,0); // remove package model
 			Messages.createErrorMessage(e.getMessage());
 		}
 	}
 
+	/**
+	 * This function reads the input values from the textFields and converts them to the correct units.
+	 * @return Packet with the converted values
+	 */
+	private Packet readPacket() {
+		int length = Integer.parseInt(lengthTextField.getText());
+		int width = Integer.parseInt(widthTextField.getText());
+		int height = Integer.parseInt(heightTextField.getText());
+		int weight = Integer.parseInt(weightTextField.getText());
+
+		// Convert dimensions and weight
+		length = convertToMillimeters(length, lengthUnitComboBox.getValue());
+		width = convertToMillimeters(width, widthUnitComboBox.getValue());
+		height = convertToMillimeters(height, heightUnitComboBox.getValue());
+		weight = convertToGrams(weight, weightUnitComboBox.getValue());
+
+		// create a new Packet with the converted values
+        return new Packet(length, width, height, weight);
+	}
+
+	/**
+	 * This function converts the given value to millimeters.
+	 * @param value that is to be converted
+	 * @param unit of the value
+	 * @return value in millimeters
+	 */
 	private int convertToMillimeters(int value, String unit) {
 		return switch (unit) {
 			case CM -> value * 10;
@@ -166,6 +182,12 @@ public class CalculatorArea extends GridPane {
 		};
 	}
 
+	/**
+	 * This function converts the given value to grams.
+	 * @param value that is to be converted
+	 * @param unit of the value
+	 * @return value in grams
+	 */
 	private int convertToGrams(int value, String unit) {
 		return KG.equals(unit) ? value * 1000 : value; // "g"
 	}

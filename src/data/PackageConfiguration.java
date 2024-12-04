@@ -1,5 +1,9 @@
 package data;
 
+/**
+ * The PackageConfiguration class contains a package with a price.
+ * @see data.Packet
+ */
 public class PackageConfiguration extends Packet {
     private double price;
 

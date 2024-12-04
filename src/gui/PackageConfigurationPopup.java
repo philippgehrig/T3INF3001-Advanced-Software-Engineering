@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
+/**
+ * The PackageConfigurationPopup class represents a popup window for displaying package configurations.
+ */
 public class PackageConfigurationPopup {
     // initialize the labels
     private static final String LENGTH_LABEL = "Length [mm]";

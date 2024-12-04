@@ -7,8 +7,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The PacketTest class contains the unit tests for the Packet class.
+ */
 class PacketTest {
 
+    /**
+     * Test the constructor and getters of the Packet class.
+     */
     @Test
     void testPacketGetters() {
         Packet packet = new Packet(300, 200, 100, 500);
@@ -20,6 +26,9 @@ class PacketTest {
         assertEquals(900, packet.getGirth());
     }
 
+    /**
+     * Test the setters of the Packet class.
+     */
     @Test
     void testPacketSetters() {
         Packet packet = new Packet(300, 200, 100, 500);
@@ -53,6 +62,9 @@ class PacketTest {
         assertEquals(1400, packet.getGirth());
     }
 
+    /**
+     * Test the constructor with negative dimensions.
+     */
     @ParameterizedTest
     @ValueSource(ints = {-1, -1, -1, -1})
     void testNegativeDimensions(int value) {
@@ -66,6 +78,9 @@ class PacketTest {
                 new Packet(300, 200, 100, value));
     }
 
+    /**
+     * Test the constructor with 0 as dimensions and weight.
+     */
     @ParameterizedTest
     @ValueSource(ints = {0, 0, 0, 0})
     void testZeroDimensions(int value) {
@@ -79,6 +94,9 @@ class PacketTest {
                 new Packet(300, 200, 100, value));
     }
 
+    /**
+     * Test the girth calculation of the constructor
+     */
     @Test
     void testValidGirthCalculation() {
         // girth = 1 * L + 2 * W + 2 * H with ordered dimensions => 1 * 300 + 2 * 200 + 2 * 100 = 900

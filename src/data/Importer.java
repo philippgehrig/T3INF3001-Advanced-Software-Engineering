@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+/**
+ * The Importer class imports the package configurations from a csv file.
+ */
 public class Importer {
     private static final Logger logger = Logger.getLogger(Importer.class.getName());
 
@@ -16,7 +20,6 @@ public class Importer {
      * @param filePath to the package configurations
      * @return List of Package Configurations
      */
-
     public List<PackageConfiguration> importPackageConfigurations(String filePath) {
         // initialise the list of package configurations
         List<PackageConfiguration> packageConfigurations = new ArrayList<>();
@@ -57,7 +60,6 @@ public class Importer {
      * @param values Array of Strings which are read from the csv file
      * @return PackageConfiguration object with the values from the csv file
      */
-
     private static PackageConfiguration getPackageConfiguration(String[] values) {
         int length = Integer.parseInt(values[0]);
         int height = Integer.parseInt(values[1]);

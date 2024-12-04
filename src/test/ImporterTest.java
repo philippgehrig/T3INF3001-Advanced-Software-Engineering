@@ -14,6 +14,9 @@ import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The ImporterTest class contains the unit tests for the Importer class.
+ */
 class ImporterTest {
 
     private static final String VALID_FILE_PATH_WITH_GIRTH = "src/test/packageConfigurations.csv";
@@ -32,6 +35,10 @@ class ImporterTest {
 
     private final Importer importer = new Importer();
 
+    /**
+     * Write all the test files before running the tests.
+     * @throws IOException if an I/O error occurs
+     */
     @BeforeAll
     static void setUp() throws IOException {
         try (FileWriter writer = new FileWriter(VALID_FILE_PATH_WITH_GIRTH)) {
@@ -69,6 +76,10 @@ class ImporterTest {
         }
     }
 
+    /**
+     * Delete all the test files after running the tests.
+     * @throws IOException if an I/O error occurs
+     */
     @AfterAll
     static void tearDown() throws IOException {
         Files.deleteIfExists(Paths.get(VALID_FILE_PATH_WITH_GIRTH));
@@ -79,6 +90,9 @@ class ImporterTest {
         Files.deleteIfExists(Paths.get(TOO_SHORT_FILE_PATH));
     }
 
+    /**
+     * Test the importPackageConfigurations method with a valid file containing girth.
+     */
     @Test
     void testImportPackageConfigurations() {
         List<PackageConfiguration> packageConfigurations =
@@ -96,7 +110,9 @@ class ImporterTest {
 
     }
 
-
+    /**
+     * Test the importPackageConfigurations method with a valid file not containing girth.
+     */
     @Test
     void testImportPackageConfigurationsFileNotFound() {
         logger.setLevel(Level.OFF);
@@ -110,6 +126,9 @@ class ImporterTest {
         logger.setLevel(originalLogLevel);
     }
 
+    /**
+     * Test the importPackageConfigurations method with a valid file not containing girth.
+     */
     @Test
     void testImportPackageConfigurationsInvalidFormat() {
         logger.setLevel(Level.OFF);
@@ -123,6 +142,9 @@ class ImporterTest {
         logger.setLevel(originalLogLevel);
     }
 
+    /**
+     * Test the importPackageConfigurations method with a valid file not containing girth.
+     */
     @Test
     void testImportPackageConfigurationsInvalidNumberFormat() {
         logger.setLevel(Level.OFF);
@@ -136,7 +158,9 @@ class ImporterTest {
 
         logger.setLevel(originalLogLevel);
     }
-
+    /**
+     * Test the importPackageConfigurations method with a valid file not containing girth.
+     */
     @Test
     void testImportPackageConfigurationsTooShort() {
         logger.setLevel(Level.OFF);

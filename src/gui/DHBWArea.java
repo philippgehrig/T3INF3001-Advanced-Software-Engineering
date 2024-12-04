@@ -14,7 +14,7 @@ public class DHBWArea extends VBox {
     private static final String DHBW_TEXT =
             "\n \n student number: 5622763 " +
                     "\n \n name: Philipp Gehrig" +
-                    "\n\n This project is for the Module Advanced Software Engineering ";
+                    "\n \n This project is for the Module Advanced Software Engineering ";
 
     private static final String IMAGE_PATH = "/gui/resources/dhbw.png";
 

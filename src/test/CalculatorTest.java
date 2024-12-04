@@ -23,6 +23,10 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The CalculatorTest class contains tests for the Calculator class.
+ * @see control.Calculator
+ */
 class CalculatorTest {
 
     private Calculator calculator;
@@ -30,6 +34,10 @@ class CalculatorTest {
     private static final String CSV_FILE_PATH_WITH_GIRTH = "src/test/testPackageConfigurationsWithGirth.csv";
     private static final String UNEQUAL_ERROR_MESSAGE = "The calculated price should match the expected price";
 
+    /**
+     * Write test CSV files for package configurations.
+     * @throws IOException if an I/O error occurs while writing the csv file
+     */
     @BeforeAll
     static void writeCsvFile() throws IOException {
         try (FileWriter writer = new FileWriter(CSV_FILE_PATH_WITHOUT_GIRTH)) {
@@ -50,17 +58,28 @@ class CalculatorTest {
         }
     }
 
+    /**
+     * Set up a new Calculator object before each test.
+     */
     @BeforeEach
     void setUp() {
         calculator = new Calculator();
     }
 
+    /**
+     * Remove the test CSV files after all tests have been executed
+     * @throws IOException if an I/O error occurs while deleting the csv file
+     */
     @AfterAll
     static void removeCsvFile() throws IOException {
         Files.deleteIfExists(Paths.get(CSV_FILE_PATH_WITHOUT_GIRTH));
         Files.deleteIfExists(Paths.get(CSV_FILE_PATH_WITH_GIRTH));
     }
 
+    /**
+     * Create a stream of valid packages without girth.
+     * @return a stream of valid packages without girth.
+     */
     static Stream<Map.Entry<Packet, Double>> createValidPackagesWithoutGirth() {
         Importer importer = new Importer();
         List<PackageConfiguration> packageConfigurations =
@@ -127,6 +146,10 @@ class CalculatorTest {
         return packages.entrySet().stream();
     }
 
+    /**
+     * Create a stream of valid packages with girth.
+     * @return a stream of valid packages with girth.
+     */
     static Stream<Map.Entry<Packet, Double>> createValidPackagesWithGirth(){
 
         Importer importer = new Importer();
@@ -164,6 +187,10 @@ class CalculatorTest {
         return packages.entrySet().stream();
     }
 
+    /**
+     * Create a stream of out of bounds packages.
+     * @return a stream of out of bounds packages.
+     */
     static Stream<Packet> createOutOfBoundsPackages() {
         return Stream.of(
                 new Packet(601, 1, 1, 1),  // Exceeds length limit
@@ -173,6 +200,10 @@ class CalculatorTest {
         );
     }
 
+    /**
+     * Create a stream of 1000 random packages.
+     * @return a stream of 1000 random packages.
+     */
     static Stream<Map.Entry<Packet, Double>> createRandomPackages() {
         Map<Packet, Double> packages = new HashMap<>();
 
@@ -196,6 +227,14 @@ class CalculatorTest {
         return packages.entrySet().stream();
     }
 
+    /**
+     * Function used with random test cases to validate the calculation function of actual Calculator class
+     * Calculate the shipping costs for a given package.
+     * @param pack the package for which to calculate the shipping costs
+     * @return the shipping costs for the package
+     * @throws NotValidDimensionsException if the package dimensions are not valid
+     * @throws IllegalArgumentException if the package dimensions are negative
+     */
     public double calcShippingCosts(Packet pack) throws NotValidDimensionsException, IllegalArgumentException {
         // Validate inputs
         checkInputs(pack.getLength(), pack.getWidth(), pack.getHeight(), pack.getWeight());
@@ -230,6 +269,15 @@ class CalculatorTest {
         return shippingCosts;
     }
 
+    /**
+     * Check the inputs of a package for valid inputs.
+     * @param length the length of the package
+     * @param width the width of the package
+     * @param height the height of the package
+     * @param weight the weight of the package
+     * @throws NotValidDimensionsException if the package dimensions are not valid
+     * @throws IllegalArgumentException if the package dimensions are negative
+     */
     public void checkInputs(int length, int width, int height, int weight)
             throws NotValidDimensionsException, IllegalArgumentException {
         if (length <= 0 || width <= 0 || height <= 0 || weight <= 0) {
@@ -248,6 +296,10 @@ class CalculatorTest {
         }
     }
 
+    /**
+     * Test the calculation of shipping costs for valid packages without girth.
+     * @param entry Map of Packages and Expected Prices
+     */
     @ParameterizedTest
     @MethodSource("createValidPackagesWithoutGirth")
     void testValidPackagesForPriceWithoutGirth(Map.Entry<Packet, Double> entry) {
@@ -261,6 +313,10 @@ class CalculatorTest {
         }
     }
 
+    /**
+     * Test the calculation of shipping costs for valid packages with girth.
+     * @param entry Map of Packages and Expected Prices
+     */
     @ParameterizedTest
     @MethodSource("createValidPackagesWithGirth")
     void testValidPackagesForPriceWithGirth(Map.Entry<Packet, Double> entry) {
@@ -274,6 +330,10 @@ class CalculatorTest {
         }
     }
 
+    /**
+     * Test the calculation of shipping costs for out of bounds packages.
+     * @param packet the out-of-bounds package
+     */
     @ParameterizedTest
     @MethodSource("createOutOfBoundsPackages")
     void testCalcShippingCostWithOutOfBoundsPackages(Packet packet) {
@@ -281,6 +341,12 @@ class CalculatorTest {
                 calculator.calcShippingCosts(packet, CSV_FILE_PATH_WITHOUT_GIRTH));
     }
 
+    /**
+     * Test the calculation of shipping costs for 1000 random packages.
+     * Compare the calculated price from the Calculator class with the price calculated in the test function.
+     * @param entry Map of Packages and Expected Prices
+     * @see control.Calculator
+     */
     @ParameterizedTest
     @MethodSource("createRandomPackages")
     void testRandomPackages(Map.Entry<Packet, Double> entry) {

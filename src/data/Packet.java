@@ -1,5 +1,8 @@
 package data;
 
+/**
+ * The Packet class contains the dimensions and weight of a packet.
+ */
 public class Packet {
     private int length;
     private int width;

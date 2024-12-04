@@ -1,0 +1,179 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > PackageModelArea</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">gui</a>
+</div>
+
+<h1>Coverage Summary for Class: PackageModelArea (gui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PackageModelArea</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package gui;
+&nbsp;
+&nbsp;import javafx.scene.SubScene;
+&nbsp;import javafx.scene.input.MouseEvent;
+&nbsp;import javafx.scene.layout.VBox;
+&nbsp;import javafx.scene.text.Font;
+&nbsp;import javafx.scene.text.Text;
+&nbsp;
+&nbsp;/**
+&nbsp; * The PackageModelArea class contains the 3D model of the package.
+&nbsp; * It displays the 3D model of the package in a SubScene which can be rotated by the user.
+&nbsp; */
+&nbsp;public class PackageModelArea extends VBox {
+&nbsp;
+&nbsp;    private final PackageModel packageModel;
+&nbsp;    private double mouseOldX;
+&nbsp;    private double mouseOldY;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor for the PackageModelArea class.
+&nbsp;     * Contains the PackageModel Sub scene @link{PackageModel}
+&nbsp;     */
+<b class="nc">&nbsp;    public PackageModelArea() {</b>
+<b class="nc">&nbsp;        packageModel = new PackageModel();</b>
+&nbsp;
+<b class="nc">&nbsp;        Text text = new Text(&quot;3D-Model&quot;);</b>
+<b class="nc">&nbsp;        text.setFont(new Font(20));</b>
+&nbsp;
+&nbsp;        // Create a SubScene for the 3D model
+<b class="nc">&nbsp;        SubScene subScene = new SubScene(packageModel.getGroup(), 550, 800, true, null);</b>
+<b class="nc">&nbsp;        subScene.setCamera(packageModel.createCamera());</b>
+&nbsp;
+&nbsp;        // Add the SubScene to the VBox
+<b class="nc">&nbsp;        this.getChildren().addAll(text, subScene);</b>
+&nbsp;
+&nbsp;        // Set up mouse events for rotating the 3D model
+<b class="nc">&nbsp;        subScene.setOnMousePressed(this::handleMousePressed);</b>
+<b class="nc">&nbsp;        subScene.setOnMouseDragged(this::handleMouseDragged);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This function updates the 3D model with the new dimensions
+&nbsp;     * @param length of the 3-dimensional model
+&nbsp;     * @param width of the 3-dimensional model
+&nbsp;     * @param height of the 3-dimensional model
+&nbsp;     */
+&nbsp;    public void handleUpdate(int length, int width, int height) {
+<b class="nc">&nbsp;        packageModel.updateModel(length, width, height);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This function handles the mouse pressed event for rotating the 3D model
+&nbsp;     * @param event the mouse event
+&nbsp;     */
+&nbsp;    private void handleMousePressed(MouseEvent event) {
+<b class="nc">&nbsp;        mouseOldX = event.getSceneX();</b>
+<b class="nc">&nbsp;        mouseOldY = event.getSceneY();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     *  This function handles the mouse dragged event for rotating the 3D model
+&nbsp;     * @param event the mouse event
+&nbsp;     */
+&nbsp;    private void handleMouseDragged(MouseEvent event) {
+<b class="nc">&nbsp;        double mousePosX = event.getSceneX();</b>
+<b class="nc">&nbsp;        double mousePosY = event.getSceneY();</b>
+&nbsp;
+&nbsp;        // Update rotations based on mouse movement
+<b class="nc">&nbsp;        packageModel.getRotateX().setAngle(packageModel.getRotateX().getAngle() - (mousePosY - mouseOldY));</b>
+<b class="nc">&nbsp;        packageModel.getRotateY().setAngle(packageModel.getRotateY().getAngle() + (mousePosX - mouseOldX));</b>
+<b class="nc">&nbsp;        mouseOldX = mousePosX;</b>
+<b class="nc">&nbsp;        mouseOldY = mousePosY;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-04 15:00</div>
+</div>
+</body>
+</html>

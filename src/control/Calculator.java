@@ -7,6 +7,9 @@ import data.Packet;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * The Calculator class calculates the shipping costs of a package.
+ */
 public class Calculator {
 
 	/**

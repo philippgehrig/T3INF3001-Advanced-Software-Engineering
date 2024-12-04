@@ -4,8 +4,14 @@ import data.PackageConfiguration;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The PackageConfigurationTest class contains the unit tests for the PackageConfiguration class.
+ */
 class PackageConfigurationTest {
 
+    /**
+     * Test the constructor and getters of the PackageConfiguration class.
+     */
     @Test
     void testConstructorAndGetters() {
         int length = 100;
@@ -25,6 +31,9 @@ class PackageConfigurationTest {
         assertEquals(price, config.getPrice(), 0.01);
     }
 
+    /**
+     * Test the setters of the PackageConfiguration class.
+     */
     @Test
     void testSetters() {
         PackageConfiguration config =
